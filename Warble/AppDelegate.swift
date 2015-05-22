@@ -12,10 +12,21 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogOut", name: userDidLogOutNotification, object: nil)
+        
+        if User.currentUser != nil {
+            // go to logged in screen, timeline
+            println("current user detected: \(User.currentUser?.name)")
+            
+            var vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController") as! UIViewController
+            window?.rootViewController = vc
+        }
+        
         return true
     }
 
@@ -41,6 +52,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        TwitterClient.sharedInstance.openURL(url)
+        return true
+    }
+    
+    func userDidLogOut() {
+        // nav back to Login page
+        var vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
+//        vc.performSegueWithIdentifier("logoutSegue", sender: vc)
+        window?.rootViewController = vc
+    }
 }
 
