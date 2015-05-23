@@ -84,8 +84,8 @@ class ShowTweetViewController: UIViewController {
     
     
     @IBAction func onReplyButtonClicked(sender: AnyObject) {
-        
-        
+        replyButton.selected = true
+        performSegueWithIdentifier("replyToTweetSegue", sender: self)
     }
     
     
@@ -97,7 +97,7 @@ class ShowTweetViewController: UIViewController {
                     if error != nil {
                         NSLog("ERROR: TwitterClient.sharedInstance.retweet: \(error)")
                     } else {
-                        NSLog("Successfully retweeted with result: \(result)")
+//                        NSLog("Successfully retweeted with result: \(result)")
                         self.retweetButton.selected = true
                         if let result = result as NSDictionary! {
                             if let id = result["id"] as! Int? {
@@ -116,7 +116,7 @@ class ShowTweetViewController: UIViewController {
                     if error != nil {
                         NSLog("ERROR: TwitterClient.sharedInstance.destroy: \(error)")
                     } else {
-                        NSLog("Successfully destroyed tweet with result: \(result)")
+//                        NSLog("Successfully destroyed tweet with result: \(result)")
                         self.retweetButton.selected = false
                     }
                 })
@@ -158,14 +158,14 @@ class ShowTweetViewController: UIViewController {
         
     }
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "replyToTweetSegue" {
+            let composeTweetViewController = segue.destinationViewController as! ComposeTweetViewController
+            composeTweetViewController.replyToTweetId = tweetId
+            composeTweetViewController.tweetTextPrefix = screennameLabel.text
+            composeTweetViewController.user = User.currentUser!
+        }
     }
-    */
 
 }

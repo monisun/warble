@@ -84,8 +84,13 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     }
     
     
-    func tweetWithStatus(status: String, completion: (result: NSDictionary?, error: NSError?) -> ()) {
+    func tweetWithStatus(status: String, replyToTweetId: Int?, completion: (result: NSDictionary?, error: NSError?) -> ()) {
         var tweetJSONUrl = "1.1/statuses/update.json?status=" + status
+        
+        if let replyToId = replyToTweetId as Int? {
+            tweetJSONUrl = tweetJSONUrl + "&in_reply_to_status_id=\(replyToId)"
+        }
+        
         tweetJSONUrl = tweetJSONUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         
         POST(tweetJSONUrl, parameters: nil,
