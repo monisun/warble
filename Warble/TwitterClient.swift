@@ -30,64 +30,137 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         // fetch request token & redirect to authorization page 
         TwitterClient.sharedInstance.requestSerializer.removeAccessToken()
         
-        TwitterClient.sharedInstance.fetchRequestTokenWithPath("oauth/request_token", method: "GET", callbackURL: NSURL(string: "warble://oauth"), scope: nil, success: { (requestToken: BDBOAuth1Credential!) -> Void in
-            
-            println("got the request token")
-            var authURL = NSURL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken.token)")
-            
-            UIApplication.sharedApplication().openURL(authURL!)
-            
+        TwitterClient.sharedInstance.fetchRequestTokenWithPath("oauth/request_token", method: "GET", callbackURL: NSURL(string: "warble://oauth"), scope: nil,
+            success: { (requestToken: BDBOAuth1Credential!) -> Void in
+                NSLog("Successfully got the request token.")
+                
+                var authURL = NSURL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken.token)")
+                UIApplication.sharedApplication().openURL(authURL!)
             }) { (error: NSError!) -> Void in
-                println("failed to get request token")
+                NSLog("Error getting request token.")
                 self.loginCompletion?(user: nil, error: error)
         }
     }
     
     func openURL(url: NSURL) {
-        
-        fetchAccessTokenWithPath("oauth/access_token", method: "POST", requestToken: BDBOAuth1Credential(queryString: url.query), success: { (accessToken: BDBOAuth1Credential!) -> Void in
-            println("got the access token")
-            
-            TwitterClient.sharedInstance.requestSerializer.saveAccessToken(accessToken)
-            
-            // verify credentials and get current user
-            TwitterClient.sharedInstance.GET("1.1/account/verify_credentials.json", parameters: nil, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+        fetchAccessTokenWithPath("oauth/access_token", method: "POST", requestToken: BDBOAuth1Credential(queryString: url.query),
+            success: { (accessToken: BDBOAuth1Credential!) -> Void in
+                NSLog("Successfully got the access token.")
+                TwitterClient.sharedInstance.requestSerializer.saveAccessToken(accessToken)
                 
-//                var dict = NSJSONSerialization.JSONObjectWithData(response! as! NSData, options: nil, error: nil) as! NSDictionary
-                
-                var user = User(dict: response as! NSDictionary)
-                User.currentUser = user
-                
-                println("serialized user: \(user)")
-                println("user: \(user.name)")
-                
-                self.loginCompletion?(user: user, error: nil)
-                
-                }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                    println("error getting current user")
-                    self.loginCompletion?(user: nil, error: error)
-            })
+                // verify credentials and get current user
+                TwitterClient.sharedInstance.GET("1.1/account/verify_credentials.json", parameters: nil,
+                    success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                        //                var dict = NSJSONSerialization.JSONObjectWithData(response! as! NSData, options: nil, error: nil) as! NSDictionary
+                        var user = User(dict: response as! NSDictionary)
+                        User.currentUser = user
+                        
+                        NSLog("Successfully serialized user: \(user) with username: \(user.name)")
+                        
+                        self.loginCompletion?(user: user, error: nil)},
+                    failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                        NSLog("Error getting current user.")
+                        self.loginCompletion?(user: nil, error: error)
+                })
             
         }) { (error: NSError!) -> Void in
-            println("failed to retrieve access token")
+            NSLog("Failed to retrieve access token/")
             self.loginCompletion?(user: nil, error: error!)
         }
     }
     
     func homeTimelineWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
         // get home timeline
-        GET("1.1/statuses/home_timeline.json", parameters: nil, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-            
-//            var homeTimelineAsJson = NSJSONSerialization.JSONObjectWithData(response! as? NSArray, options: nil, error: nil) as! [NSDictionary]
-        
-            println("home timeline: \(response as! [NSDictionary])")
-            
-            var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
-            completion(tweets: tweets, error: nil)
-            
-        }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                println("error getting home timeline: \(error.description)")
+        GET("1.1/statuses/home_timeline.json?count=20", parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                //          var homeTimelineAsJson = NSJSONSerialization.JSONObjectWithData(response! as? NSArray, options: nil, error: nil) as! [NSDictionary]
+                NSLog("Successfully got home timeline.")
+                var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
+                completion(tweets: tweets, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error getting home timeline: \(error.description)")
                 completion(tweets: nil, error: error)
+        })
+    }
+    
+    
+    func tweetWithStatus(status: String, completion: (result: NSDictionary?, error: NSError?) -> ()) {
+        var tweetJSONUrl = "1.1/statuses/update.json?status=" + status
+        tweetJSONUrl = tweetJSONUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        POST(tweetJSONUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                // debug
+                //            println(response)
+                NSLog("Successfully tweeted with status.")
+                completion(result: response as? NSDictionary, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error posting new tweet: \(error.description)")
+                completion(result: nil, error: error)
+        })
+    }
+    
+    func retweet(id: Int, completion: (result: NSDictionary?, error: NSError?) -> ()) {
+        var retweetJSONUrl = "1.1/statuses/retweet/\(id).json"
+        retweetJSONUrl = retweetJSONUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        POST(retweetJSONUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                // debug
+                //            println(response)
+                NSLog("Successfully retweeted a tweet.")
+                completion(result: response as? NSDictionary, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error retweeting: \(error.description)")
+                completion(result: nil, error: error)
+        })
+    }
+    
+    func destroy(id: Int, completion: (result: NSDictionary?, error: NSError?) -> ()) {
+        var retweetJSONUrl = "1.1/statuses/destroy/\(id).json"
+        retweetJSONUrl = retweetJSONUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        POST(retweetJSONUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                // debug
+                //  println(response)
+                NSLog("Successfully destroyed a tweet.")
+                completion(result: response as? NSDictionary, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error destroying tweet: \(error.description)")
+                completion(result: nil, error: error)
+        })
+    }
+    
+    func createFavorite(id: Int, completion: (result: NSDictionary?, error: NSError?) -> ()) {
+        var createFavoriteJSONUrl = "1.1/favorites/create.json?id=\(id)"
+        createFavoriteJSONUrl = createFavoriteJSONUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        POST(createFavoriteJSONUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                // debug
+                //            println(response)
+                NSLog("SUCCESS: Request create favorite.")
+                completion(result: response as? NSDictionary, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error in create favorite: \(error.description)")
+                completion(result: nil, error: error)
+        })
+    }
+    
+    func destroyFavorite(id: Int, completion: (result: NSDictionary?, error: NSError?) -> ()) {
+        var destroyFavoriteJSONUrl = "1.1/favorites/destroy.json?id=\(id)"
+        destroyFavoriteJSONUrl = destroyFavoriteJSONUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        POST(destroyFavoriteJSONUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                // debug
+                //            println(response)
+                NSLog("SUCCESS: Request destroy favorite.")
+                completion(result: response as? NSDictionary, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error in destroy favorite: \(error.description)")
+                completion(result: nil, error: error)
         })
     }
 

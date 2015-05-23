@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController") as! UIViewController
             window?.rootViewController = vc
         }
-        
         return true
     }
 
@@ -60,7 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func userDidLogOut() {
         // nav back to Login page
         var vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
-//        vc.performSegueWithIdentifier("logoutSegue", sender: vc)
         window?.rootViewController = vc
     }
 }
