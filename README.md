@@ -25,6 +25,12 @@ Time spent: `<Number of hours spent>`
 - [x] Replies should be prefixed with the username and the reply_id should be set when posting the tweet,
 - [x] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 
+#### Additional
+
+- [x] Added in-memory cache functionality to limit Twitter API home timeline requests. (Used as a workaround for API's low rate-limit.) Added handling to clear cache in case of low-memory warning.
+- [x] Added different Reply, Retweet, Favorite button displays for Normal, Highlighted, vs Selected control states.  
+
+
 ### Walkthrough
 
 ![Video Walkthrough](...)
