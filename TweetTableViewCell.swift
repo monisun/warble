@@ -68,22 +68,22 @@ class TweetTableViewCell: UITableViewCell {
         name.preferredMaxLayoutWidth = name.frame.size.width
         name.numberOfLines = 1
         screename.numberOfLines = 1
-        name.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(12))
-        screename.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
+        name.font = UIFont(name: "HelveticaNeue", size: CGFloat(12))
+        screename.font = UIFont(name: "HelveticaNeue", size: CGFloat(10))
         
         tweetText.numberOfLines = 0
-        tweetText.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(12))
+        tweetText.font = UIFont(name: "HelveticaNeue", size: CGFloat(12))
         timestamp.numberOfLines = 1
-        timestamp.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
+        timestamp.font = UIFont(name: "HelveticaNeue", size: CGFloat(10))
         
         retweetCount.numberOfLines = 1
         retweetCount.sizeToFit()
-        retweetCount.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
+        retweetCount.font = UIFont(name: "HelveticaNeue", size: CGFloat(10))
         retweetCount.textColor = UIColor.darkGrayColor()
         
         favoriteCount.numberOfLines = 1
         favoriteCount.sizeToFit()
-        favoriteCount.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
+        favoriteCount.font = UIFont(name: "HelveticaNeue", size: CGFloat(10))
         favoriteCount.textColor = UIColor.darkGrayColor()
         
         

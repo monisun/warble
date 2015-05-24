@@ -74,31 +74,31 @@ class ShowTweetViewController: UIViewController {
             // styling
             // styling
             nameLabel.textAlignment = NSTextAlignment.Left
-            nameLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
+            nameLabel.font = UIFont(name: "HelveticaNeue", size: 14)
             nameLabel.numberOfLines = 1
             
             screennameLabel.textAlignment = NSTextAlignment.Left
-            screennameLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+            screennameLabel.font = UIFont(name: "HelveticaNeue", size: 12)
             screennameLabel.textColor = UIColor.darkGrayColor()
             screennameLabel.numberOfLines = 1
             
             tweetTextLabel.textAlignment = NSTextAlignment.Left
-            tweetTextLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
+            tweetTextLabel.font = UIFont(name: "HelveticaNeue", size: 14)
             tweetTextLabel.numberOfLines = 0
             
             timestampLabel.textAlignment = NSTextAlignment.Left
-            timestampLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+            timestampLabel.font = UIFont(name: "HelveticaNeue", size: 12)
             timestampLabel.textColor = UIColor.darkGrayColor()
             timestampLabel.numberOfLines = 1
             
             retweetCount.numberOfLines = 1
             retweetCount.sizeToFit()
-            retweetCount.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
+            retweetCount.font = UIFont(name: "HelveticaNeue", size: CGFloat(10))
             retweetCount.textColor = UIColor.darkGrayColor()
             
             favoriteCount.numberOfLines = 1
             favoriteCount.sizeToFit()
-            favoriteCount.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
+            favoriteCount.font = UIFont(name: "HelveticaNeue", size: CGFloat(10))
             favoriteCount.textColor = UIColor.darkGrayColor()
             
             if user?.username == User.currentUser?.username {

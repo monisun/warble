@@ -43,14 +43,14 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                 
                 // styling
                 nameLabel.textAlignment = NSTextAlignment.Left
-                nameLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
+                nameLabel.font = UIFont(name: "HelveticaNeue", size: 14)
                 nameLabel.numberOfLines = 1
                 screenname.textAlignment = NSTextAlignment.Left
-                screenname.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+                screenname.font = UIFont(name: "HelveticaNeue", size: 12)
                 screenname.textColor = UIColor.darkGrayColor()
                 screenname.numberOfLines = 1
                 characterCounterLabel.textAlignment = NSTextAlignment.Right
-                characterCounterLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+                characterCounterLabel.font = UIFont(name: "HelveticaNeue", size: 12)
                 characterCounterLabel.textColor = UIColor.darkGrayColor()
                 characterCounterLabel.numberOfLines = 1
             }
