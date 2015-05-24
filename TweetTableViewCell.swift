@@ -10,6 +10,8 @@ import UIKit
 
 @objc protocol TweetTableViewCellDelegate {
     optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, replyButtonClicked value: Bool)
+    
+    optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, deleteButtonClicked value: Bool)
 }
 
 class TweetTableViewCell: UITableViewCell {
@@ -24,6 +26,8 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    
     
     @IBOutlet weak var retweetCount: UILabel!
     @IBOutlet weak var favoriteCount: UILabel!
@@ -52,6 +56,10 @@ class TweetTableViewCell: UITableViewCell {
             
             retweetCount.text = String(tweet.retweetCount as Int!)
             favoriteCount.text = String(tweet.favoriteCount as Int!)
+            
+            if tweet.user?.username == User.currentUser?.username {
+                deleteButton.hidden = false
+            }
         }
     }
 
@@ -96,6 +104,13 @@ class TweetTableViewCell: UITableViewCell {
         replyButton.setImage(UIImage(named: "reply_hover"), forState: UIControlState.Selected)
         
         replyButton.addTarget(self, action: "replyButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // hide delete button by default
+        deleteButton.hidden = true
+        deleteButton.selected = false
+        deleteButton.setImage(UIImage(named: "trash"), forState: UIControlState.Normal)
+        
+        deleteButton.addTarget(self, action: "deleteButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     override func layoutSubviews() {
@@ -203,8 +218,15 @@ class TweetTableViewCell: UITableViewCell {
         
         replyButton.selected = true
         
-        println("replyButtonClicked")
+        NSLog("replyButtonClicked")
         delegate?.tweetTableViewCell?(self, replyButtonClicked: replyButton.selected)
+    }
+    
+    func deleteButtonClicked() {
+        deleteButton.selected = true
+        NSLog("deleteButtonClicked. Deleting tweet...")
+        
+        delegate?.tweetTableViewCell?(self, deleteButtonClicked: deleteButton.selected)
     }
 
 }

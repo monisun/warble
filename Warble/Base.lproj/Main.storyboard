@@ -162,10 +162,10 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xme-cD-nYL">
                                                     <rect key="frame" x="173" y="77" width="23" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2Z-VM-cUF" userLabel="Favorite Button">
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2Z-VM-cUF" userLabel="Favorite Button">
                                                     <rect key="frame" x="203" y="76" width="34" height="22"/>
                                                     <state key="normal" image="favorite">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -177,21 +177,33 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="22" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zmv-0H-Pyb">
                                                     <rect key="frame" x="230" y="77" width="25" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AF9-Mj-aFl" userLabel="Delete Button">
+                                                    <rect key="frame" x="257" y="79" width="21" height="16"/>
+                                                    <state key="normal" image="trash">
+                                                        <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onFavoriteButtonClicked:" destination="CB3-gb-UTv" eventType="touchUpInside" id="pcS-Ji-IFM"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="f1T-hk-9BP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fIi-Jc-0uK" secondAttribute="trailing" constant="5" id="161-hZ-Dpy"/>
                                                 <constraint firstAttribute="bottom" secondItem="R2Z-VM-cUF" secondAttribute="bottom" constant="3" id="2Qk-uV-TEE"/>
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="leading" secondItem="nPG-sO-wT6" secondAttribute="leading" id="4cf-nS-VxB"/>
                                                 <constraint firstItem="R2Z-VM-cUF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xme-cD-nYL" secondAttribute="trailing" constant="3" id="4uJ-Uv-nfA"/>
+                                                <constraint firstAttribute="bottom" secondItem="AF9-Mj-aFl" secondAttribute="bottom" constant="3" id="6Q7-Yk-H8P"/>
+                                                <constraint firstAttribute="trailing" secondItem="AF9-Mj-aFl" secondAttribute="trailing" constant="5" id="6rp-Zb-261"/>
                                                 <constraint firstItem="j01-9a-OQq" firstAttribute="top" secondItem="VxH-Qd-5Uh" secondAttribute="top" constant="15" id="7zl-OH-Cgj"/>
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="leading" secondItem="fIi-Jc-0uK" secondAttribute="leading" id="9Uh-bO-EUT"/>
                                                 <constraint firstItem="JIu-yl-cJH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VxH-Qd-5Uh" secondAttribute="top" constant="3" id="A70-wc-0Ti"/>
                                                 <constraint firstItem="f1T-hk-9BP" firstAttribute="top" secondItem="fIi-Jc-0uK" secondAttribute="top" id="E3V-U3-dhx"/>
                                                 <constraint firstAttribute="bottom" secondItem="f1T-hk-9BP" secondAttribute="bottom" constant="3" id="Gdt-7X-wcQ"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nPG-sO-wT6" secondAttribute="trailing" constant="20" id="H9E-zd-zOS"/>
+                                                <constraint firstItem="AF9-Mj-aFl" firstAttribute="top" secondItem="R2Z-VM-cUF" secondAttribute="top" id="JGP-vj-INV"/>
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="top" secondItem="j01-9a-OQq" secondAttribute="top" id="JiJ-Cz-Ark"/>
                                                 <constraint firstItem="Zmv-0H-Pyb" firstAttribute="leading" secondItem="R2Z-VM-cUF" secondAttribute="trailing" constant="1" id="MCm-ew-Jya"/>
                                                 <constraint firstAttribute="bottom" secondItem="fIi-Jc-0uK" secondAttribute="bottom" constant="3" id="Ogr-M0-Twa"/>
@@ -199,6 +211,7 @@
                                                 <constraint firstItem="JIu-yl-cJH" firstAttribute="leading" secondItem="VxH-Qd-5Uh" secondAttribute="leading" constant="10" id="QJ3-O5-P3n"/>
                                                 <constraint firstItem="Zmv-0H-Pyb" firstAttribute="top" secondItem="xme-cD-nYL" secondAttribute="top" id="VdY-3h-3vI"/>
                                                 <constraint firstAttribute="bottom" secondItem="nPG-sO-wT6" secondAttribute="bottom" constant="5" id="W1F-BY-y97"/>
+                                                <constraint firstItem="AF9-Mj-aFl" firstAttribute="leading" secondItem="Zmv-0H-Pyb" secondAttribute="trailing" constant="3" id="Y9C-0d-shV"/>
                                                 <constraint firstItem="xme-cD-nYL" firstAttribute="leading" secondItem="f1T-hk-9BP" secondAttribute="trailing" constant="1" id="bYN-6g-MvC"/>
                                                 <constraint firstItem="o37-ID-v0C" firstAttribute="leading" secondItem="oDT-8k-nFg" secondAttribute="trailing" constant="2" id="cvA-Sf-yBI"/>
                                                 <constraint firstItem="nPG-sO-wT6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JIu-yl-cJH" secondAttribute="trailing" constant="5" id="gkO-Xb-LwB"/>
@@ -212,6 +225,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="deleteButton" destination="AF9-Mj-aFl" id="MCN-Ea-KoK"/>
                                             <outlet property="favoriteButton" destination="R2Z-VM-cUF" id="RKw-A6-G8J"/>
                                             <outlet property="favoriteCount" destination="Zmv-0H-Pyb" id="uLN-yE-cHl"/>
                                             <outlet property="name" destination="oDT-8k-nFg" id="LHk-G1-8Dp"/>
@@ -318,7 +332,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQ3-rt-cCt">
                                 <rect key="frame" x="241" y="90" width="63" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <navigationBar contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gm9-MR-LDM">
@@ -481,7 +495,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5IE-g6-HCm" userLabel="Retweet Count Label">
                                 <rect key="frame" x="129" y="316" width="20" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DCX-G2-mti" userLabel="Favorite Button">
@@ -496,7 +510,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="55" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cu9-Un-owL" userLabel="Favorite Count Label">
                                 <rect key="frame" x="199" y="313" width="20" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -560,6 +574,7 @@
         <image name="logo" width="64" height="53"/>
         <image name="reply" width="8" height="8"/>
         <image name="retweet" width="9" height="8"/>
+        <image name="trash" width="10" height="10"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

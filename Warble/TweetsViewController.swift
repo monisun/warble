@@ -90,11 +90,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             NSLog("ERROR: tweets[] does not contain index: \(indexPath.row)")
         }
         
-        println(indexPath.row)
-        
         if (indexPath.row == tweets.count - 1) || ((indexPath.row > 0) && (indexPath.row % pageIndexOffset == 0)) {
-            // debug
-            println(indexPath.row)
             
             // fetch more results
             let maxIdForRequest = minId! - 1
@@ -107,8 +103,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 } else {
                     // extend for scrolling
                     self.tweets.extend(tweets!)
-                    // debug
-                    println (self.tweets.count)
                     self.tableView.reloadData()
                     self.minId = minId
                     SVProgressHUD.showSuccessWithStatus("Success")
@@ -174,6 +168,30 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         NSLog("replyButtonClicked event")
         currentlySelectedTweet = tweetTableViewCell.tweet
         performSegueWithIdentifier("replyToTweetFromHomeTimelineSegue", sender: self)
+    }
+    
+    func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, deleteButtonClicked value: Bool) {
+        NSLog("deleteButtonClicked event")
+        currentlySelectedTweet = tweetTableViewCell.tweet
+        let indexPathCellToDelete = tableView.indexPathForCell(tweetTableViewCell)
+        
+        TwitterClient.sharedInstance.destroy(currentlySelectedTweet!.tweetId!, completion: { (result, error) -> () in
+            if error != nil {
+                NSLog("ERROR: TwitterClient.sharedInstance.destroy: \(error)")
+            } else {
+                NSLog("Successfully destroyed/removed tweet.")
+                
+                if self.tweets.count > indexPathCellToDelete!.row {
+                    self.tweets.removeAtIndex(indexPathCellToDelete!.row)
+                } else {
+                    NSLog("UNEXPECTED: self.tweets.count is less than/equal to indexPathCellToDelete.row. Cannot delete tweet!")
+                }
+                
+                self.tableView.beginUpdates()
+                self.tableView.deleteRowsAtIndexPaths([indexPathCellToDelete!], withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.endUpdates()
+            }
+        })
     }
 
 }
