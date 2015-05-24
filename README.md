@@ -28,7 +28,8 @@ Time spent: `<Number of hours spent>`
 #### Additional
 
 - [x] Added in-memory cache functionality to limit Twitter API home timeline requests. (Used as a workaround for API's low rate-limit.) Added handling to clear cache in case of low-memory warning.
-- [x] Added different Reply, Retweet, Favorite button displays for Normal, Highlighted, vs Selected control states.  
+- [x] Added different Reply, Retweet, Favorite button displays for Normal, Highlighted, vs Selected control states.
+- [x] Added HUD to show loading/success state for API requests.
 
 
 ### Walkthrough
@@ -39,3 +40,4 @@ Time spent: `<Number of hours spent>`
 - [Twitter API](https://apps.twitter.com/)
 - [BDBOAuth1Manager](https://github.com/bdbergeron/BDBOAuth1Manager)
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking)
+- [SVProgressHUD](https://github.com/TransitApp/SVProgressHUD)
