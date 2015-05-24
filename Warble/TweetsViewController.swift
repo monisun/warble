@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TweetTableViewCellDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TweetTableViewCellDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     let pageIndexOffset = 199  // max allowed per Twitter API is 200
     var minId: Int?             // min tweet id of currently fetched tweets
     let maxNumTweetsToKeepInMemory = 1000
@@ -17,11 +17,23 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     var refreshControl = UIRefreshControl()
     var currentlySelectedTweet: Tweet?
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var searchActive = false
+    var lastSearchedTerm = String()
+    var searchResultTweets = [Tweet]()
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.backgroundColor = UIColor(red: CGFloat(194/255), green: CGFloat(1), blue: CGFloat(1), alpha: CGFloat(0.02))
+        
+        self.navigationItem.titleView = searchBar
+        searchBar.delegate = self
+        //        searchBar.showsCancelButton = true
+        searchBar.translucent = true
+        
+//        self.tableView.backgroundColor = UIColor(red: CGFloat(194/255), green: CGFloat(1), blue: CGFloat(1), alpha: CGFloat(0.02))
         
 //        let logoTitleImage = UIImage(named: "logo")
 //        let logoTitleImageView = UIImageView(image: logoTitleImage)
@@ -70,6 +82,36 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         User.currentUser?.logout()
     }
     
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchActive = true
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchActive = false
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchActive = true
+        let searchTerms = searchBar.text
+        lastSearchedTerm = searchTerms
+        
+        TwitterClient.sharedInstance.searchTweets(searchTerms, completion: { (tweets, minId, error) -> () in
+            if error != nil {
+                SVProgressHUD.dismiss()
+                NSLog("ERROR: Searching tweets with TwitterClient.sharedInstance.searchTweets: \(error)")
+            } else {
+                self.searchResultTweets = tweets!
+                self.tableView.reloadData()
+                SVProgressHUD.showSuccessWithStatus("Success")
+            }
+        })
+    }
+    
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -77,38 +119,53 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweets.count
+        if searchActive {
+            return searchResultTweets.count
+        } else {
+            return tweets.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = TweetTableViewCell()
         
-        if tweets.count > indexPath.row {
-            cell = tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! TweetTableViewCell
-            cell.tweet = tweets[indexPath.row]
-            cell.delegate = self
+        if searchActive {
+            if searchResultTweets.count > indexPath.row {
+                cell = tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! TweetTableViewCell
+                cell.tweet = searchResultTweets[indexPath.row]
+                cell.delegate = self
+            } else {
+                NSLog("ERROR: searchResultTweets[] does not contain index: \(indexPath.row)")
+            }
+            
         } else {
-            NSLog("ERROR: tweets[] does not contain index: \(indexPath.row)")
-        }
-        
-        if (indexPath.row == tweets.count - 1) || ((indexPath.row > 0) && (indexPath.row % pageIndexOffset == 0)) {
+            if tweets.count > indexPath.row {
+                cell = tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! TweetTableViewCell
+                cell.tweet = tweets[indexPath.row]
+                cell.delegate = self
+            } else {
+                NSLog("ERROR: tweets[] does not contain index: \(indexPath.row)")
+            }
             
-            // fetch more results
-            let maxIdForRequest = minId! - 1
-            SVProgressHUD.showProgress(1, status: "Loading...")
-            
-            TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: maxIdForRequest, completion:  { (tweets, minId, error) -> () in
-                if error != nil {
-                    SVProgressHUD.dismiss()
-                    NSLog("ERROR: Fetching more results with TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
-                } else {
-                    // extend for scrolling
-                    self.tweets.extend(tweets!)
-                    self.tableView.reloadData()
-                    self.minId = minId
-                    SVProgressHUD.showSuccessWithStatus("Success")
-                }
-            })
+            if (indexPath.row == tweets.count - 1) || ((indexPath.row > 0) && (indexPath.row % pageIndexOffset == 0)) {
+                
+                // fetch more results
+                let maxIdForRequest = minId! - 1
+                SVProgressHUD.showProgress(1, status: "Loading...")
+                
+                TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: maxIdForRequest, completion:  { (tweets, minId, error) -> () in
+                    if error != nil {
+                        SVProgressHUD.dismiss()
+                        NSLog("ERROR: Fetching more results with TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
+                    } else {
+                        // extend for scrolling
+                        self.tweets.extend(tweets!)
+                        self.tableView.reloadData()
+                        self.minId = minId
+                        SVProgressHUD.showSuccessWithStatus("Success")
+                    }
+                })
+            }
         }
         
         return cell
@@ -130,6 +187,9 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 SVProgressHUD.dismiss()
                 NSLog("ERROR: onRefresh TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
             } else {
+                // set searchActive to false for pull to refresh (always refresh home timeline)
+                self.searchActive = false
+                
                 self.tweets = tweets!
                 self.tableView.reloadData()
                 self.minId = minId

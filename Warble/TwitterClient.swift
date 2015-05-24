@@ -178,5 +178,25 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
                 completion(result: nil, error: error)
         })
     }
+    
+    func searchTweets(q: String, completion: (tweets: [Tweet]?, minId: Int?, error: NSError?) -> ()) {
+        // search for top 20 tweets
+        var trimmedQ = q.stringByReplacingOccurrencesOfString(" ", withString: "")
+        var searchUrl = "1.1/search/tweets.json?q=\(trimmedQ)&count=20"
+        searchUrl = searchUrl.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        GET(searchUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                NSLog("Successfully got search results home timeline.")
+                
+                var tweetsData = Tweet.tweetsWithArray(response["statuses"] as! [NSDictionary]) as ([Tweet], Int)
+                var tweets = tweetsData.0
+                var minId = tweetsData.1
+                completion(tweets: tweets, minId: minId, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error getting home timeline: \(error.description)")
+                completion(tweets: nil, minId: nil, error: error)
+        })
+    }
 
 }
