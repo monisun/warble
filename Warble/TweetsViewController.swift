@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TweetTableViewCellDelegate {
     
     var tweets = [Tweet]()
     var refreshControl = UIRefreshControl()
@@ -74,6 +74,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         if tweets.count > indexPath.row {
             cell = tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! TweetTableViewCell
             cell.tweet = tweets[indexPath.row]
+            cell.delegate = self
         } else {
             NSLog("ERROR: tweets[] does not contain index: \(indexPath.row)")
         }
@@ -118,7 +119,20 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             let showTweetViewController = segue.destinationViewController as! ShowTweetViewController
             showTweetViewController.tweet = currentlySelectedTweet
         }
+        
+        if segue.identifier == "replyToTweetFromHomeTimelineSegue" {
+            let composeViewController = segue.destinationViewController as! ComposeTweetViewController
+            composeViewController.user = User.currentUser!
+            composeViewController.replyToTweetId = currentlySelectedTweet?.tweetId
+            composeViewController.tweetTextPrefix = "@" + (currentlySelectedTweet?.user?.username as String!)
+        }
     }
 
+    
+    func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, replyButtonClicked value: Bool) {
+        NSLog("replyButtonClicked event")
+        currentlySelectedTweet = tweetTableViewCell.tweet
+        performSegueWithIdentifier("replyToTweetFromHomeTimelineSegue", sender: self)
+    }
 
 }

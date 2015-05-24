@@ -14,6 +14,8 @@ class Tweet: NSObject {
     var createdAtString: String?
     var createdAt: NSDate?
     var tweetId: Int?
+    var favoriteCount: Int?
+    var retweetCount: Int?
     
     let formatter = NSDateFormatter()
     
@@ -29,6 +31,8 @@ class Tweet: NSObject {
         // display format
         formatter.dateFormat = "EEE MMM d HH:mm"
         createdAtString = formatter.stringFromDate(createdAt!)
+        favoriteCount = dict["favorite_count"] as? Int
+        retweetCount = dict["retweet_count"] as? Int
     }
     
     class func tweetsWithArray(array: [NSDictionary]) -> [Tweet] {

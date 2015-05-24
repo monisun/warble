@@ -24,6 +24,9 @@ class ShowTweetViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var replyButton: UIButton!
     
+    @IBOutlet weak var retweetCount: UILabel!
+    @IBOutlet weak var favoriteCount: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,6 +55,10 @@ class ShowTweetViewController: UIViewController {
             timestampLabel.text = tweet.createdAtString
             tweetId = tweet.tweetId as Int?
             
+            
+            retweetCount.text = String(tweet.retweetCount as Int!)
+            favoriteCount.text = String(tweet.favoriteCount as Int!)
+            
             // styling
             // styling
             nameLabel.textAlignment = NSTextAlignment.Left
@@ -71,6 +78,16 @@ class ShowTweetViewController: UIViewController {
             timestampLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
             timestampLabel.textColor = UIColor.darkGrayColor()
             timestampLabel.numberOfLines = 1
+            
+            retweetCount.numberOfLines = 1
+            retweetCount.sizeToFit()
+            retweetCount.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
+            retweetCount.textColor = UIColor.darkGrayColor()
+            
+            favoriteCount.numberOfLines = 1
+            favoriteCount.sizeToFit()
+            favoriteCount.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
+            favoriteCount.textColor = UIColor.darkGrayColor()
             
         } else {
             NSLog("UNEXPECTED: tweet is nil in ShowTweetViewController")
@@ -99,6 +116,11 @@ class ShowTweetViewController: UIViewController {
                     } else {
 //                        NSLog("Successfully retweeted with result: \(result)")
                         self.retweetButton.selected = true
+                        
+                        let currentRetweetCount: Int = self.retweetCount.text!.toInt() as Int!
+                        let updatedRetweetCount = (currentRetweetCount + 1) as Int
+                        self.retweetCount.text = String(updatedRetweetCount)
+                        
                         if let result = result as NSDictionary! {
                             if let id = result["id"] as! Int? {
                                 self.retweetId = id
@@ -118,6 +140,10 @@ class ShowTweetViewController: UIViewController {
                     } else {
 //                        NSLog("Successfully destroyed tweet with result: \(result)")
                         self.retweetButton.selected = false
+                        
+                        let currentRetweetCount: Int = self.retweetCount.text!.toInt() as Int!
+                        let updatedRetweetCount = (currentRetweetCount - 1) as Int
+                        self.retweetCount.text = String(updatedRetweetCount)
                     }
                 })
             }
@@ -135,6 +161,10 @@ class ShowTweetViewController: UIViewController {
                     } else {
                         NSLog("Successfully created favorite.")
                         self.favoriteButton.selected = true
+                        
+                        let currentFavoriteCount: Int = self.favoriteCount.text!.toInt() as Int!
+                        let updatedFavoriteCount = (currentFavoriteCount + 1) as Int
+                        self.favoriteCount.text = String(updatedFavoriteCount)
                     }
                 })
             } else {
@@ -149,6 +179,10 @@ class ShowTweetViewController: UIViewController {
                     } else {
                         NSLog("Successfully destroyed/removed favorite.")
                         self.favoriteButton.selected = false
+                        
+                        let currentFavoriteCount: Int = self.favoriteCount.text!.toInt() as Int!
+                        let updatedFavoriteCount = (currentFavoriteCount - 1) as Int
+                        self.favoriteCount.text = String(updatedFavoriteCount)
                     }
                 })
             } else {
@@ -167,5 +201,4 @@ class ShowTweetViewController: UIViewController {
             composeTweetViewController.user = User.currentUser!
         }
     }
-
 }
