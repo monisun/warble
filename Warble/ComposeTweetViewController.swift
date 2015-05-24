@@ -32,9 +32,9 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
             } else {
                 // properly initialized; populate compose view
                 profileImage.setImageWithURL(NSURL(string: user.profileImageUrl!))
-                profileImage.contentMode = UIViewContentMode.ScaleAspectFit
-                profileImage.frame.size.width = 25
-                profileImage.frame.size.height = 50
+                profileImage.contentMode = UIViewContentMode.ScaleAspectFill
+                profileImage.frame.size.width = 30
+                profileImage.frame.size.height = 30
                 profileImage.layer.cornerRadius = 5
                 
                 nameLabel.text = user.name

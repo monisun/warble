@@ -21,6 +21,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.backgroundColor = UIColor(red: CGFloat(194/255), green: CGFloat(1), blue: CGFloat(1), alpha: CGFloat(0.02))
         
 //        let logoTitleImage = UIImage(named: "logo")
 //        let logoTitleImageView = UIImageView(image: logoTitleImage)

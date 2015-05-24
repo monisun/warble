@@ -44,10 +44,9 @@ class TweetTableViewCell: UITableViewCell {
             profileImage.setImageWithURL(NSURL(string: imageUrlString))
             profileImage.layer.cornerRadius = 5
 //            profileImage.clipsToBounds = true
-            profileImage.frame.size.width = 30
-            profileImage.frame.size.height = 50
-            profileImage.contentMode = UIViewContentMode.ScaleAspectFit
-//            profileImage.backgroundColor = UIColor.redColor()
+            profileImage.frame.size.width = 40
+            profileImage.frame.size.height = 40
+            profileImage.contentMode = UIViewContentMode.ScaleAspectFill
             
             screename.text = "@" + (tweet.user?.username as String!)
             tweetText.text = tweet.text

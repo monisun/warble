@@ -56,6 +56,10 @@ class ShowTweetViewController: UIViewController {
             let user = tweet.user as User?
             let urlString = user?.profileImageUrl as String?
             profileImage.setImageWithURL(NSURL(string: urlString!))
+            profileImage.contentMode = UIViewContentMode.ScaleAspectFill
+            profileImage.frame.size.width = 30
+            profileImage.frame.size.height = 30
+            profileImage.layer.cornerRadius = 5
             nameLabel.text = user?.name
             screennameLabel.text = "@" + (user?.username as String!)
             tweetTextLabel.text = tweet.text
