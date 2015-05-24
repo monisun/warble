@@ -158,21 +158,21 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="22" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zmv-0H-Pyb">
-                                                    <rect key="frame" x="202" y="78" width="25" height="21"/>
+                                                    <rect key="frame" x="213" y="78" width="20" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AF9-Mj-aFl" userLabel="Delete Button">
-                                                    <rect key="frame" x="229" y="80" width="21" height="16"/>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AF9-Mj-aFl" userLabel="Delete Button">
+                                                    <rect key="frame" x="246" y="80" width="21" height="16"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <state key="normal" image="trash">
                                                         <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2Z-VM-cUF" userLabel="Favorite Button">
-                                                    <rect key="frame" x="182" y="77" width="22" height="22"/>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2Z-VM-cUF" userLabel="Favorite Button">
+                                                    <rect key="frame" x="193" y="76" width="22" height="22"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <state key="normal" image="favorite">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -189,7 +189,7 @@
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="leading" secondItem="nPG-sO-wT6" secondAttribute="leading" id="4cf-nS-VxB"/>
                                                 <constraint firstItem="R2Z-VM-cUF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xme-cD-nYL" secondAttribute="trailing" constant="3" id="4uJ-Uv-nfA"/>
                                                 <constraint firstAttribute="bottom" secondItem="AF9-Mj-aFl" secondAttribute="bottom" constant="3" id="6Q7-Yk-H8P"/>
-                                                <constraint firstAttribute="trailing" secondItem="AF9-Mj-aFl" secondAttribute="trailing" constant="5" id="6rp-Zb-261"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AF9-Mj-aFl" secondAttribute="trailing" constant="5" id="6rp-Zb-261"/>
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="leading" secondItem="fIi-Jc-0uK" secondAttribute="leading" id="9Uh-bO-EUT"/>
                                                 <constraint firstItem="JIu-yl-cJH" firstAttribute="top" secondItem="VxH-Qd-5Uh" secondAttribute="top" constant="10" id="A70-wc-0Ti"/>
                                                 <constraint firstItem="f1T-hk-9BP" firstAttribute="top" secondItem="fIi-Jc-0uK" secondAttribute="top" id="E3V-U3-dhx"/>
@@ -199,18 +199,17 @@
                                                 <constraint firstItem="nPG-sO-wT6" firstAttribute="top" secondItem="j01-9a-OQq" secondAttribute="bottom" constant="3" id="Ibt-4K-eji"/>
                                                 <constraint firstItem="AF9-Mj-aFl" firstAttribute="top" secondItem="R2Z-VM-cUF" secondAttribute="top" id="JGP-vj-INV"/>
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="top" secondItem="j01-9a-OQq" secondAttribute="top" id="JiJ-Cz-Ark"/>
-                                                <constraint firstItem="Zmv-0H-Pyb" firstAttribute="leading" secondItem="R2Z-VM-cUF" secondAttribute="trailing" constant="1" id="MCm-ew-Jya"/>
+                                                <constraint firstItem="Zmv-0H-Pyb" firstAttribute="leading" secondItem="R2Z-VM-cUF" secondAttribute="trailing" id="MCm-ew-Jya"/>
                                                 <constraint firstAttribute="bottom" secondItem="fIi-Jc-0uK" secondAttribute="bottom" constant="3" id="Ogr-M0-Twa"/>
                                                 <constraint firstItem="JIu-yl-cJH" firstAttribute="leading" secondItem="VxH-Qd-5Uh" secondAttribute="leading" constant="10" id="QJ3-O5-P3n"/>
                                                 <constraint firstItem="Zmv-0H-Pyb" firstAttribute="top" secondItem="xme-cD-nYL" secondAttribute="top" id="VdY-3h-3vI"/>
-                                                <constraint firstItem="AF9-Mj-aFl" firstAttribute="leading" secondItem="Zmv-0H-Pyb" secondAttribute="trailing" constant="3" id="Y9C-0d-shV"/>
+                                                <constraint firstItem="AF9-Mj-aFl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Zmv-0H-Pyb" secondAttribute="trailing" constant="3" id="Y9C-0d-shV"/>
                                                 <constraint firstItem="xme-cD-nYL" firstAttribute="leading" secondItem="f1T-hk-9BP" secondAttribute="trailing" constant="1" id="bYN-6g-MvC"/>
                                                 <constraint firstItem="o37-ID-v0C" firstAttribute="leading" secondItem="oDT-8k-nFg" secondAttribute="trailing" constant="2" id="cvA-Sf-yBI"/>
                                                 <constraint firstItem="f1T-hk-9BP" firstAttribute="top" secondItem="R2Z-VM-cUF" secondAttribute="top" id="k4A-04-UT0"/>
                                                 <constraint firstItem="AF9-Mj-aFl" firstAttribute="height" secondItem="R2Z-VM-cUF" secondAttribute="height" id="kcv-u6-Zow"/>
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="leading" secondItem="VxH-Qd-5Uh" secondAttribute="leadingMargin" constant="50" id="n35-m4-TCJ"/>
                                                 <constraint firstItem="Zmv-0H-Pyb" firstAttribute="height" secondItem="xme-cD-nYL" secondAttribute="height" id="shO-O9-GgY"/>
-                                                <constraint firstItem="Zmv-0H-Pyb" firstAttribute="width" secondItem="xme-cD-nYL" secondAttribute="width" id="vpd-L3-jhL"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="j01-9a-OQq" secondAttribute="trailing" constant="5" id="whO-SP-JPg"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="JIu-yl-cJH" secondAttribute="bottom" constant="10" id="yKo-sf-fkg"/>
                                             </constraints>
