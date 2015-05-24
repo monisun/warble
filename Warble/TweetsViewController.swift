@@ -35,6 +35,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.estimatedRowHeight = 80
         
         // initial request for landing page
+        SVProgressHUD.showProgress(1, status: "Loading...")
         TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
             if error != nil {
                 NSLog("ERROR: TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
@@ -42,6 +43,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 self.tweets = tweets!
                 self.tableView.reloadData()
                 self.minId = minId
+                SVProgressHUD.showSuccessWithStatus("Success")
             }
         })
     
@@ -95,6 +97,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             
             // fetch more results
             let maxIdForRequest = minId! - 1
+            SVProgressHUD.showProgress(1, status: "Loading...")
+            
             TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: maxIdForRequest, completion:  { (tweets, minId, error) -> () in
                 if error != nil {
                     NSLog("ERROR: Fetching more results with TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
@@ -105,6 +109,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                     println (self.tweets.count)
                     self.tableView.reloadData()
                     self.minId = minId
+                    SVProgressHUD.showSuccessWithStatus("Success")
                 }
             })
         }
@@ -122,6 +127,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func onRefresh() {
+        SVProgressHUD.showProgress(1, status: "Loading...")
         TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
             if error != nil {
                 NSLog("ERROR: onRefresh TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
@@ -130,6 +136,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 self.tableView.reloadData()
                 self.minId = minId
                 self.refreshControl.endRefreshing()
+                SVProgressHUD.showSuccessWithStatus("Success")
             }
         })
     }

@@ -93,11 +93,13 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                 // TODO further validation? if replyToTweetId is not nil, then tweet text must contain "@username" of referenced tweet.
                 
                 // save tweet
+                SVProgressHUD.showProgress(1, status: "Loading...")
                 TwitterClient.sharedInstance.tweetWithStatus(tweetText, replyToTweetId: replyToTweetId, completion: { (result, error) -> () in
                     if error != nil {
                         NSLog("ERROR: TwitterClient.sharedInstance.tweetWithStatus: \(error)")
                     } else {
                         NSLog("Successfully posted new tweet.")
+                        SVProgressHUD.showSuccessWithStatus("Success")
                         
                         if let replyId = self.replyToTweetId as Int?  {
                             // nav back to show tweet VC
@@ -108,6 +110,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                             // TODO reloadData() did not always refresh correctly, as tweets[] was already populated before new tweet got to home timeline (?)
                             // tweetViewController.tableView.reloadData()
                             
+                            SVProgressHUD.showProgress(1, status: "Loading...")
                             TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
                                 if error != nil {
                                     NSLog("ERROR: TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
@@ -115,6 +118,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                                     tweetViewController.tweets = tweets!
                                     tweetViewController.tableView.reloadData()
                                     tweetViewController.minId = minId
+                                    SVProgressHUD.showSuccessWithStatus("Success")
                                     
                                     // segue back to main page
                                     self.performSegueWithIdentifier("tweetDoneSegue", sender: self)
