@@ -35,6 +35,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                 profileImage.contentMode = UIViewContentMode.ScaleAspectFit
                 profileImage.frame.size.width = 25
                 profileImage.frame.size.height = 50
+                profileImage.layer.cornerRadius = 5
                 
                 nameLabel.text = user.name
                 screenname.text = "@" + (user.username as String!)
@@ -63,6 +64,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
             tweetTextView.text = ""
         }
 //        tweetTextView.clearsOnInsertion = true
+        tweetTextView.layer.cornerRadius = 10
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,12 +108,13 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                             // TODO reloadData() did not always refresh correctly, as tweets[] was already populated before new tweet got to home timeline (?)
                             // tweetViewController.tableView.reloadData()
                             
-                            TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: { (tweets, error) -> () in
+                            TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
                                 if error != nil {
                                     NSLog("ERROR: TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
                                 } else {
                                     tweetViewController.tweets = tweets!
                                     tweetViewController.tableView.reloadData()
+                                    tweetViewController.minId = minId
                                     
                                     // segue back to main page
                                     self.performSegueWithIdentifier("tweetDoneSegue", sender: self)

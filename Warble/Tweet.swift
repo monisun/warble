@@ -35,13 +35,28 @@ class Tweet: NSObject {
         retweetCount = dict["retweet_count"] as? Int
     }
     
-    class func tweetsWithArray(array: [NSDictionary]) -> [Tweet] {
-        var tweets = [Tweet]()
-        
-        for entry in array {
-            tweets.append(Tweet(dict: entry))
+    class func tweetsWithArray(array: [NSDictionary]) -> ([Tweet], Int) {
+        if array.count > 0 {
+            let firstTweetInArray = Tweet(dict: array[0])
+            
+            // initialize minId as id of first Tweet in array
+            var minId = firstTweetInArray.tweetId     // lowest id of tweets in array. maxId is an inclusive parameter per Twitter API; lower maxId means older tweet
+            
+            var tweets = [Tweet]()
+            
+            for entry in array {
+                let currentTweet = Tweet(dict: entry)
+                tweets.append(currentTweet)
+                
+                if currentTweet.tweetId < minId {
+                    minId = currentTweet.tweetId
+                }
+            }
+            return (tweets, minId!)
+        } else {
+            NSLog("array is empty in tweetsWithArray")
+            return ([Tweet](), Int())
         }
-        return tweets
     }
    
 }

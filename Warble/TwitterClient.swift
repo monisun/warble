@@ -69,17 +69,27 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         }
     }
     
-    func homeTimelineWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
+    func homeTimelineWithParams(params: NSDictionary?, maxId: Int?, completion: (tweets: [Tweet]?, minId: Int?, error: NSError?) -> ()) {
         // get home timeline
-        GET("1.1/statuses/home_timeline.json?count=20", parameters: nil,
+        var homeTimelineUrl = "1.1/statuses/home_timeline.json?count=200"
+        
+        if let maxId = maxId as Int! {
+            homeTimelineUrl += "&max_id=\(maxId)"
+        }
+        homeTimelineUrl = homeTimelineUrl.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        GET(homeTimelineUrl, parameters: nil,
             success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
                 //          var homeTimelineAsJson = NSJSONSerialization.JSONObjectWithData(response! as? NSArray, options: nil, error: nil) as! [NSDictionary]
                 NSLog("Successfully got home timeline.")
-                var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
-                completion(tweets: tweets, error: nil)},
+                
+                var tweetsData = Tweet.tweetsWithArray(response as! [NSDictionary]) as ([Tweet], Int)
+                var tweets = tweetsData.0
+                var minId = tweetsData.1
+                completion(tweets: tweets, minId: minId, error: nil)},
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 NSLog("Error getting home timeline: \(error.description)")
-                completion(tweets: nil, error: error)
+                completion(tweets: nil, minId: nil, error: error)
         })
     }
     

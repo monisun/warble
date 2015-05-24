@@ -9,6 +9,9 @@
 import UIKit
 
 class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TweetTableViewCellDelegate {
+    let pageIndexOffset = 199  // max allowed per Twitter API is 200
+    var minId: Int?             // min tweet id of currently fetched tweets
+    let maxNumTweetsToKeepInMemory = 1000
     
     var tweets = [Tweet]()
     var refreshControl = UIRefreshControl()
@@ -31,12 +34,14 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
         
-        TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: { (tweets, error) -> () in
+        // initial request for landing page
+        TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
             if error != nil {
                 NSLog("ERROR: TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
             } else {
                 self.tweets = tweets!
                 self.tableView.reloadData()
+                self.minId = minId
             }
         })
     
@@ -51,6 +56,9 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        if tweets.count > maxNumTweetsToKeepInMemory {
+            tweets.removeRange(Range(start: 0, end: maxNumTweetsToKeepInMemory))
+        }
     }
     
     
@@ -79,6 +87,28 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             NSLog("ERROR: tweets[] does not contain index: \(indexPath.row)")
         }
         
+        println(indexPath.row)
+        
+        if (indexPath.row == tweets.count - 1) || ((indexPath.row > 0) && (indexPath.row % pageIndexOffset == 0)) {
+            // debug
+            println(indexPath.row)
+            
+            // fetch more results
+            let maxIdForRequest = minId! - 1
+            TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: maxIdForRequest, completion:  { (tweets, minId, error) -> () in
+                if error != nil {
+                    NSLog("ERROR: Fetching more results with TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
+                } else {
+                    // extend for scrolling
+                    self.tweets.extend(tweets!)
+                    // debug
+                    println (self.tweets.count)
+                    self.tableView.reloadData()
+                    self.minId = minId
+                }
+            })
+        }
+        
         return cell
     }
     
@@ -92,12 +122,13 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func onRefresh() {
-        TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: { (tweets, error) -> () in
+        TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
             if error != nil {
                 NSLog("ERROR: onRefresh TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
             } else {
                 self.tweets = tweets!
                 self.tableView.reloadData()
+                self.minId = minId
                 self.refreshControl.endRefreshing()
             }
         })
