@@ -1,5 +1,5 @@
 # Warble
-Simple Twitter client to read and compose tweets using the [Twitter API](https://apps.twitter.com/).
+Simple Twitter client to view and compose tweets using the [Twitter API](https://apps.twitter.com/).
 
 Time spent: `<Number of hours spent>`
 
@@ -27,11 +27,13 @@ Time spent: `<Number of hours spent>`
 
 #### Additional
 
-- [x] Added in-memory cache functionality to limit Twitter API home timeline requests. (Used as a workaround for API's low rate-limit.) Added handling to clear cache in case of low-memory warning.
+- [x] Added in-memory cache functionality to limit Twitter API requests. (Used as a workaround for API's low rate-limit.) Added handling to clear cache in the case of low memory.
+- [x] Added search bar to allow users to search for tweets.
 - [x] Added delete tweet functionality.
+- [x] Added timestamp display formatting to show _time_ _ago_ similar to Twitter.
 - [x] Added different Reply, Retweet, Favorite button displays for Normal, Highlighted, vs Selected control states.
 - [x] Added HUD to show loading/success state for API requests.
-- [x] Added timestamp display formatting to show _time_ _ago_ similar to Twitter.
+
 
 
 ### Walkthrough
