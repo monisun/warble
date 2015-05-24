@@ -34,3 +34,8 @@ Time spent: `<Number of hours spent>`
 ### Walkthrough
 
 ![Video Walkthrough](...)
+
+### References
+- [Twitter API](https://apps.twitter.com/)
+- [BDBOAuth1Manager](https://github.com/bdbergeron/BDBOAuth1Manager)
+- [AFNetworking](https://github.com/AFNetworking/AFNetworking)
