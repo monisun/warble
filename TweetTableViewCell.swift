@@ -47,7 +47,8 @@ class TweetTableViewCell: UITableViewCell {
             
             screename.text = "@" + (tweet.user?.username as String!)
             tweetText.text = tweet.text
-            timestamp.text = tweet.createdAtString
+//            timestamp.text = tweet.createdAtString
+            timestamp.text = tweet.createdAt!.shortTimeAgoSinceNow()
             
             retweetCount.text = String(tweet.retweetCount as Int!)
             favoriteCount.text = String(tweet.favoriteCount as Int!)

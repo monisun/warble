@@ -96,6 +96,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                 SVProgressHUD.showProgress(1, status: "Loading...")
                 TwitterClient.sharedInstance.tweetWithStatus(tweetText, replyToTweetId: replyToTweetId, completion: { (result, error) -> () in
                     if error != nil {
+                        SVProgressHUD.dismiss()
                         NSLog("ERROR: TwitterClient.sharedInstance.tweetWithStatus: \(error)")
                     } else {
                         NSLog("Successfully posted new tweet.")
@@ -113,6 +114,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                             SVProgressHUD.showProgress(1, status: "Loading...")
                             TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
                                 if error != nil {
+                                    SVProgressHUD.dismiss()
                                     NSLog("ERROR: TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
                                 } else {
                                     tweetViewController.tweets = tweets!

@@ -38,6 +38,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         SVProgressHUD.showProgress(1, status: "Loading...")
         TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
             if error != nil {
+                SVProgressHUD.dismiss()
                 NSLog("ERROR: TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
             } else {
                 self.tweets = tweets!
@@ -101,6 +102,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             
             TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: maxIdForRequest, completion:  { (tweets, minId, error) -> () in
                 if error != nil {
+                    SVProgressHUD.dismiss()
                     NSLog("ERROR: Fetching more results with TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
                 } else {
                     // extend for scrolling
@@ -130,6 +132,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         SVProgressHUD.showProgress(1, status: "Loading...")
         TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
             if error != nil {
+                SVProgressHUD.dismiss()
                 NSLog("ERROR: onRefresh TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
             } else {
                 self.tweets = tweets!

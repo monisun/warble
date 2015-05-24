@@ -52,7 +52,8 @@ class ShowTweetViewController: UIViewController {
             nameLabel.text = user?.name
             screennameLabel.text = "@" + (user?.username as String!)
             tweetTextLabel.text = tweet.text
-            timestampLabel.text = tweet.createdAtString
+//            timestampLabel.text = tweet.createdAtString
+            timestampLabel.text = tweet.createdAt!.shortTimeAgoSinceNow()
             tweetId = tweet.tweetId as Int?
             
             
