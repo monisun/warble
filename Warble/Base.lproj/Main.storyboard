@@ -185,9 +185,6 @@
                                                     <state key="normal" image="trash">
                                                         <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="onFavoriteButtonClicked:" destination="CB3-gb-UTv" eventType="touchUpInside" id="pcS-Ji-IFM"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -201,6 +198,7 @@
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="leading" secondItem="fIi-Jc-0uK" secondAttribute="leading" id="9Uh-bO-EUT"/>
                                                 <constraint firstItem="JIu-yl-cJH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VxH-Qd-5Uh" secondAttribute="top" constant="3" id="A70-wc-0Ti"/>
                                                 <constraint firstItem="f1T-hk-9BP" firstAttribute="top" secondItem="fIi-Jc-0uK" secondAttribute="top" id="E3V-U3-dhx"/>
+                                                <constraint firstItem="AF9-Mj-aFl" firstAttribute="width" secondItem="R2Z-VM-cUF" secondAttribute="width" id="FpQ-uf-Cls"/>
                                                 <constraint firstAttribute="bottom" secondItem="f1T-hk-9BP" secondAttribute="bottom" constant="3" id="Gdt-7X-wcQ"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nPG-sO-wT6" secondAttribute="trailing" constant="20" id="H9E-zd-zOS"/>
                                                 <constraint firstItem="AF9-Mj-aFl" firstAttribute="top" secondItem="R2Z-VM-cUF" secondAttribute="top" id="JGP-vj-INV"/>
@@ -216,6 +214,7 @@
                                                 <constraint firstItem="o37-ID-v0C" firstAttribute="leading" secondItem="oDT-8k-nFg" secondAttribute="trailing" constant="2" id="cvA-Sf-yBI"/>
                                                 <constraint firstItem="nPG-sO-wT6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JIu-yl-cJH" secondAttribute="trailing" constant="5" id="gkO-Xb-LwB"/>
                                                 <constraint firstItem="f1T-hk-9BP" firstAttribute="top" secondItem="R2Z-VM-cUF" secondAttribute="top" id="k4A-04-UT0"/>
+                                                <constraint firstItem="AF9-Mj-aFl" firstAttribute="height" secondItem="R2Z-VM-cUF" secondAttribute="height" id="kcv-u6-Zow"/>
                                                 <constraint firstItem="oDT-8k-nFg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JIu-yl-cJH" secondAttribute="trailing" constant="5" id="rpu-gp-Ejt"/>
                                                 <constraint firstItem="Zmv-0H-Pyb" firstAttribute="height" secondItem="xme-cD-nYL" secondAttribute="height" id="shO-O9-GgY"/>
                                                 <constraint firstItem="o37-ID-v0C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VxH-Qd-5Uh" secondAttribute="top" constant="5" id="ubF-qs-OVw"/>
@@ -408,7 +407,7 @@
                                     <navigationItem title="Tweet" id="p53-88-gnZ">
                                         <barButtonItem key="leftBarButtonItem" image="back" id="nE0-y6-Xzn">
                                             <connections>
-                                                <segue destination="ODl-g2-WN3" kind="modal" id="fWh-ay-Sxx"/>
+                                                <segue destination="ODl-g2-WN3" kind="modal" identifier="afterDeleteTweetSegue" id="fWh-ay-Sxx"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -513,6 +512,15 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eoc-mM-2Xf">
+                                <rect key="frame" x="271" y="314" width="17" height="20"/>
+                                <state key="normal" image="trash">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteButtonClicked:" destination="5v6-hP-YTe" eventType="touchUpInside" id="FiR-YC-THu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -521,15 +529,19 @@
                             <constraint firstItem="ipD-76-JKN" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3v0-so-Oc8" secondAttribute="bottom" constant="3" id="6pG-Dh-1Xo"/>
                             <constraint firstItem="RMX-0D-J1z" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xWF-rM-RQC" secondAttribute="bottom" constant="5" id="6qY-i8-dum"/>
                             <constraint firstItem="gtV-KJ-c3j" firstAttribute="leading" secondItem="nja-kt-jwY" secondAttribute="leading" constant="10" id="9gO-vT-z0j"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eoc-mM-2Xf" secondAttribute="trailing" constant="1" id="Coa-2N-p9k"/>
                             <constraint firstItem="eiz-cM-9q3" firstAttribute="leading" secondItem="nja-kt-jwY" secondAttribute="leading" constant="10" id="HNj-oi-5f8"/>
                             <constraint firstItem="ipD-76-JKN" firstAttribute="leading" secondItem="nja-kt-jwY" secondAttribute="leading" constant="10" id="JFz-2R-cfL"/>
+                            <constraint firstItem="eoc-mM-2Xf" firstAttribute="height" secondItem="DCX-G2-mti" secondAttribute="height" id="LQd-Ag-5Zm"/>
                             <constraint firstItem="gtV-KJ-c3j" firstAttribute="width" secondItem="DCX-G2-mti" secondAttribute="width" id="MDf-qJ-EfB"/>
                             <constraint firstItem="eiz-cM-9q3" firstAttribute="top" secondItem="ipD-76-JKN" secondAttribute="bottom" constant="2" id="Nrz-jN-93i"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DCX-G2-mti" secondAttribute="trailing" constant="5" id="Qu4-XS-KRB"/>
                             <constraint firstItem="Zpu-Ec-zzu" firstAttribute="top" secondItem="DCX-G2-mti" secondAttribute="top" id="R9j-Jd-Qg7"/>
+                            <constraint firstItem="eoc-mM-2Xf" firstAttribute="width" secondItem="DCX-G2-mti" secondAttribute="width" id="TBM-TN-Lfd"/>
+                            <constraint firstItem="eoc-mM-2Xf" firstAttribute="centerY" secondItem="DCX-G2-mti" secondAttribute="centerY" constant="-1" id="UWo-IC-i2d"/>
                             <constraint firstItem="gtV-KJ-c3j" firstAttribute="top" secondItem="eiz-cM-9q3" secondAttribute="bottom" constant="3" id="XjU-5G-9bh"/>
                             <constraint firstAttribute="centerX" secondItem="xWF-rM-RQC" secondAttribute="centerX" id="XlN-Id-Wld"/>
                             <constraint firstItem="Zpu-Ec-zzu" firstAttribute="centerY" secondItem="5IE-g6-HCm" secondAttribute="centerY" id="Xx5-h7-5ag"/>
+                            <constraint firstItem="eoc-mM-2Xf" firstAttribute="leading" secondItem="cu9-Un-owL" secondAttribute="trailing" constant="7" id="ZpY-Gs-dSb"/>
                             <constraint firstItem="3v0-so-Oc8" firstAttribute="top" secondItem="Hrg-9h-OIr" secondAttribute="top" id="bCF-pd-Ike"/>
                             <constraint firstItem="ipD-76-JKN" firstAttribute="top" relation="greaterThanOrEqual" secondItem="vXO-Ze-SFf" secondAttribute="bottom" constant="3" id="bYM-Tl-CMG"/>
                             <constraint firstItem="xWF-rM-RQC" firstAttribute="leading" secondItem="nja-kt-jwY" secondAttribute="leading" id="cqQ-lE-ArI"/>
@@ -539,6 +551,7 @@
                             <constraint firstItem="Hrg-9h-OIr" firstAttribute="leading" secondItem="3v0-so-Oc8" secondAttribute="trailing" constant="4" id="kxP-1m-MI0"/>
                             <constraint firstItem="gtV-KJ-c3j" firstAttribute="top" secondItem="Zpu-Ec-zzu" secondAttribute="top" id="olh-O1-F5P"/>
                             <constraint firstItem="5IE-g6-HCm" firstAttribute="leading" secondItem="Zpu-Ec-zzu" secondAttribute="trailing" constant="1" id="oqu-4b-TRN"/>
+                            <constraint firstItem="RMX-0D-J1z" firstAttribute="top" relation="greaterThanOrEqual" secondItem="eoc-mM-2Xf" secondAttribute="bottom" constant="3" id="p4r-mH-WQo"/>
                             <constraint firstItem="xWF-rM-RQC" firstAttribute="top" secondItem="iu5-SQ-Lw5" secondAttribute="bottom" constant="5" id="py3-r7-3oF"/>
                             <constraint firstAttribute="trailing" secondItem="ipD-76-JKN" secondAttribute="trailing" constant="5" id="qy4-cF-RkZ"/>
                             <constraint firstItem="gtV-KJ-c3j" firstAttribute="height" secondItem="DCX-G2-mti" secondAttribute="height" id="rYC-LX-Qcz"/>
@@ -549,6 +562,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="deleteButton" destination="eoc-mM-2Xf" id="IEQ-tP-4At"/>
                         <outlet property="favoriteButton" destination="DCX-G2-mti" id="DeM-fw-NBY"/>
                         <outlet property="favoriteCount" destination="cu9-Un-owL" id="hxk-53-nfi"/>
                         <outlet property="nameLabel" destination="Hrg-9h-OIr" id="PK6-jA-nAi"/>
@@ -560,6 +574,7 @@
                         <outlet property="timestampLabel" destination="eiz-cM-9q3" id="4sS-si-WIt"/>
                         <outlet property="tweetTextLabel" destination="ipD-76-JKN" id="FMf-ly-DBW"/>
                         <segue destination="Gxh-Np-0Sd" kind="modal" identifier="replyToTweetSegue" id="1aA-Oh-Mor"/>
+                        <segue destination="ODl-g2-WN3" kind="modal" id="TEd-jN-A88"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ntl-MM-p7E" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -582,7 +597,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="v1d-c9-C6c"/>
-        <segue reference="rho-9a-muh"/>
+        <segue reference="fWh-ay-Sxx"/>
+        <segue reference="1aA-Oh-Mor"/>
     </inferredMetricsTieBreakers>
 </document>

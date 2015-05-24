@@ -23,9 +23,11 @@ class ShowTweetViewController: UIViewController {
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
     @IBOutlet weak var retweetCount: UILabel!
     @IBOutlet weak var favoriteCount: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +46,11 @@ class ShowTweetViewController: UIViewController {
         replyButton.selected = false
         replyButton.setImage(UIImage(named: "reply"), forState: UIControlState.Normal)
         replyButton.setImage(UIImage(named: "reply_hover"), forState: UIControlState.Selected)
+        
+        // hide by default
+        deleteButton.hidden = true
+        deleteButton.selected = false
+        deleteButton.setImage(UIImage(named: "trash"), forState: UIControlState.Normal)
     
         if let tweet = tweet as Tweet? {
             let user = tweet.user as User?
@@ -89,6 +96,10 @@ class ShowTweetViewController: UIViewController {
             favoriteCount.sizeToFit()
             favoriteCount.font = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(10))
             favoriteCount.textColor = UIColor.darkGrayColor()
+            
+            if user?.username == User.currentUser?.username {
+                deleteButton.hidden = false
+            }
             
         } else {
             NSLog("UNEXPECTED: tweet is nil in ShowTweetViewController")
@@ -191,6 +202,17 @@ class ShowTweetViewController: UIViewController {
             }
         }
         
+    }
+    
+    @IBAction func deleteButtonClicked(sender: AnyObject) {
+        TwitterClient.sharedInstance.destroy(tweetId!, completion: { (result, error) -> () in
+            if error != nil {
+                NSLog("ERROR: TwitterClient.sharedInstance.destroy: \(error)")
+            } else {
+                NSLog("Successfully destroyed/removed tweet.")
+                self.performSegueWithIdentifier("afterDeleteTweetSegue", sender: self)
+            }
+        })
     }
 
     // MARK: - Navigation
