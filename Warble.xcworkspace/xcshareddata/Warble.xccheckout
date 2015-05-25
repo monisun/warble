@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>598F95A2-742F-4EC5-80D4-3AAEB7F0E928</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Warble</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>733D9D86BBCD0C59DED0EEE51C77D4DCDACEF070</key>
+		<string>github.com:monisun/warble.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Warble.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>733D9D86BBCD0C59DED0EEE51C77D4DCDACEF070</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:monisun/warble.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>733D9D86BBCD0C59DED0EEE51C77D4DCDACEF070</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>733D9D86BBCD0C59DED0EEE51C77D4DCDACEF070</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Warble</string>
+		</dict>
+	</array>
+</dict>
+</plist>

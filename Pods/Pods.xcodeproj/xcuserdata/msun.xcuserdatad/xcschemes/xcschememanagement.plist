@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-Warble-AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Warble-BDBOAuth1Manager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Warble-DateTools.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Warble-SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Warble.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>37A69B1F4BC948AF379D57DF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>413BDC3FA4DF26089CA6F613</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7A665A83B53FC13F54A86565</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>89488E748FF50223DA8CE3CC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D7E2D97C7E362C9816785011</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
