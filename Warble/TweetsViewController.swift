@@ -159,21 +159,33 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
         
-        if let mediaUrl = cell.tweet.mediaUrl as String? {
-            cell.mediaImageView.hidden = false
-//            cell.mediaImageView.sizeToFit()
+        if let tweetForCell = cell.tweet as Tweet! {
+            if let mediaUrl = tweetForCell.mediaUrl as String? {
+                cell.mediaImageView.hidden = false
+            }
         }
+ 
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if tweets.count > indexPath.row {
-            currentlySelectedTweet = tweets[indexPath.row]
-            performSegueWithIdentifier("showTweetSegue", sender: self)
+        if searchActive {
+            if searchResultTweets.count > indexPath.row {
+                currentlySelectedTweet = searchResultTweets[indexPath.row]
+                performSegueWithIdentifier("showTweetSegue", sender: self)
+            } else {
+                NSLog("ERROR: In didSelectRowAtIndexPath, searchResultTweets.count: \(searchResultTweets.count) is less than or equal to indexPath.row: \(indexPath.row). Cannot segue to show tweet.")
+            }
         } else {
-            NSLog("ERROR: In didSelectRowAtIndexPath, tweets.count: \(tweets.count) is less than or equal to indexPath.row: \(indexPath.row). Cannot segue to show tweet.")
+            if tweets.count > indexPath.row {
+                currentlySelectedTweet = tweets[indexPath.row]
+                performSegueWithIdentifier("showTweetSegue", sender: self)
+            } else {
+                NSLog("ERROR: In didSelectRowAtIndexPath, tweets.count: \(tweets.count) is less than or equal to indexPath.row: \(indexPath.row). Cannot segue to show tweet.")
+            }
         }
+
     }
     
     func onRefresh() {
