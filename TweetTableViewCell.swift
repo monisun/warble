@@ -28,9 +28,10 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
-    
     @IBOutlet weak var retweetCount: UILabel!
     @IBOutlet weak var favoriteCount: UILabel!
+    
+    @IBOutlet weak var mediaImageView: UIImageView!
     
     var imageUrlString = String()
     var retweetId: Int?
@@ -58,6 +59,19 @@ class TweetTableViewCell: UITableViewCell {
             
             if tweet.user?.username == User.currentUser?.username {
                 deleteButton.hidden = false
+            }
+            
+            // set media (image) if exists
+            if let mediaUrl = tweet.mediaUrl as String? {
+                let smallMediaUrl = mediaUrl + ":small"
+                let centerX = self.center.x
+                let centerY = self.center.y
+                mediaImageView.hidden = false
+                mediaImageView.frame = CGRectMake(centerX - 15, centerY - 15, 30, 30)
+                mediaImageView.clipsToBounds = true
+                mediaImageView.setImageWithURL(NSURL(string: smallMediaUrl))
+                mediaImageView.contentMode = UIViewContentMode.ScaleAspectFill
+                mediaImageView.layer.cornerRadius = 5
             }
         }
     }
@@ -110,11 +124,16 @@ class TweetTableViewCell: UITableViewCell {
         deleteButton.setImage(UIImage(named: "trash"), forState: UIControlState.Normal)
         
         deleteButton.addTarget(self, action: "deleteButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        mediaImageView.hidden = true
+//        mediaImageView.removeFromSuperview()
+//        mediaImageView.frame.size.height = 0
+//        mediaImageView.frame.size.width = 0
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+                
         name.preferredMaxLayoutWidth = name.frame.size.width
     }
     

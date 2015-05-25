@@ -16,6 +16,7 @@ class Tweet: NSObject {
     var tweetId: Int?
     var favoriteCount: Int?
     var retweetCount: Int?
+    var mediaUrl: String?
     
     let formatter = NSDateFormatter()
     
@@ -33,6 +34,16 @@ class Tweet: NSObject {
         createdAtString = formatter.stringFromDate(createdAt!)
         favoriteCount = dict["favorite_count"] as? Int
         retweetCount = dict["retweet_count"] as? Int
+        
+        if let entities = dict["entities"] as? NSDictionary {
+            if let media = entities["media"] as? NSArray {
+                if let firstMedia = media[0] as? NSDictionary {
+                    if let mediaHttpsUrl = firstMedia["media_url_https"] as? String {
+                        mediaUrl = mediaHttpsUrl
+                    }
+                }
+            }
+        }
     }
     
     class func tweetsWithArray(array: [NSDictionary]) -> ([Tweet], Int) {

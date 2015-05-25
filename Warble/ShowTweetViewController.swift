@@ -28,6 +28,7 @@ class ShowTweetViewController: UIViewController {
     @IBOutlet weak var retweetCount: UILabel!
     @IBOutlet weak var favoriteCount: UILabel!
     
+    @IBOutlet weak var mediaImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,8 @@ class ShowTweetViewController: UIViewController {
         deleteButton.hidden = true
         deleteButton.selected = false
         deleteButton.setImage(UIImage(named: "trash"), forState: UIControlState.Normal)
+        
+        mediaImageView.hidden = true
     
         if let tweet = tweet as Tweet? {
             let user = tweet.user as User?
@@ -103,6 +106,20 @@ class ShowTweetViewController: UIViewController {
             
             if user?.username == User.currentUser?.username {
                 deleteButton.hidden = false
+            }
+            
+            if let mediaUrl = tweet.mediaUrl as String? {
+                mediaImageView.hidden = false
+                
+                let smallMediaUrl = mediaUrl + ":small"
+                let centerX = self.view.center.x
+                let centerY = self.view.center.y
+                mediaImageView.frame = CGRectMake(centerX - 20, centerY - 20, 40, 40)
+                mediaImageView.clipsToBounds = true
+                mediaImageView.setImageWithURL(NSURL(string: smallMediaUrl))
+                mediaImageView.contentMode = UIViewContentMode.ScaleAspectFill
+                mediaImageView.layer.cornerRadius = 5
+                self.view.sizeToFit()
             }
             
         } else {

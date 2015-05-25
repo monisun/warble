@@ -45,7 +45,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         self.tableView.dataSource = self
         self.tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 80
+        tableView.estimatedRowHeight = 120
         
         // initial request for landing page
         SVProgressHUD.showProgress(1, status: "Loading...")
@@ -166,6 +166,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                     }
                 })
             }
+        }
+        
+        if let mediaUrl = cell.tweet.mediaUrl as String? {
+            cell.mediaImageView.hidden = false
+//            cell.mediaImageView.sizeToFit()
         }
         
         return cell
