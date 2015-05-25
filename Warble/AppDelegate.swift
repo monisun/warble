@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if User.currentUser != nil {
             // go to logged in screen, timeline
-            println("current user detected: \(User.currentUser?.name)")
+            NSLog("current user detected: \(User.currentUser?.name)")
             
             var vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController") as! UIViewController
             window?.rootViewController = vc

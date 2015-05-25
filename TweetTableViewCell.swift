@@ -12,6 +12,8 @@ import UIKit
     optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, replyButtonClicked value: Bool)
     
     optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, deleteButtonClicked value: Bool)
+    
+    optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, fbShareButtonClicked value: Bool)
 }
 
 class TweetTableViewCell: UITableViewCell {
@@ -32,6 +34,8 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteCount: UILabel!
     
     @IBOutlet weak var mediaImageView: UIImageView!
+    
+    @IBOutlet weak var fbShareButton: UIButton!
     
     var imageUrlString = String()
     var retweetId: Int?
@@ -126,9 +130,8 @@ class TweetTableViewCell: UITableViewCell {
         deleteButton.addTarget(self, action: "deleteButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
         
         mediaImageView.hidden = true
-//        mediaImageView.removeFromSuperview()
-//        mediaImageView.frame.size.height = 0
-//        mediaImageView.frame.size.width = 0
+        
+        fbShareButton.addTarget(self, action: "fbShareButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     override func layoutSubviews() {
@@ -228,14 +231,7 @@ class TweetTableViewCell: UITableViewCell {
     }
     
     func replyButtonClicked() {
-//        if replyButton.selected {
-//            replyButton.selected = false
-//        } else {
-//            replyButton.selected = true
-//        }
-        
         replyButton.selected = true
-        
         NSLog("replyButtonClicked")
         delegate?.tweetTableViewCell?(self, replyButtonClicked: replyButton.selected)
     }
@@ -243,8 +239,15 @@ class TweetTableViewCell: UITableViewCell {
     func deleteButtonClicked() {
         deleteButton.selected = true
         NSLog("deleteButtonClicked. Deleting tweet...")
-        
         delegate?.tweetTableViewCell?(self, deleteButtonClicked: deleteButton.selected)
     }
+    
+    func fbShareButtonClicked() {
+        fbShareButton.selected = true
+        NSLog("fbShareButtonClicked delegate event")
+        delegate?.tweetTableViewCell?(self, fbShareButtonClicked: fbShareButton.selected)
+    }
+    
+    
 
 }

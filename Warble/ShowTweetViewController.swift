@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Social
 
 class ShowTweetViewController: UIViewController {
     
@@ -29,6 +30,8 @@ class ShowTweetViewController: UIViewController {
     @IBOutlet weak var favoriteCount: UILabel!
     
     @IBOutlet weak var mediaImageView: UIImageView!
+    
+    @IBOutlet weak var fbShareButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -235,6 +238,36 @@ class ShowTweetViewController: UIViewController {
             }
         })
     }
+    
+    @IBAction func fbShareButtonClicked(sender: AnyObject) {
+        var referenceText = String()
+        if let authorUsername = tweet!.user?.username as String? {
+            if let tweetText = tweet!.text as String? {
+                referenceText = "@\(authorUsername): \(tweetText)"
+            }
+        }
+        
+        if !referenceText.isEmpty {
+            if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) {
+                var fbSharePost: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                fbSharePost.setInitialText(referenceText)
+                if let mediaUrl = tweet!.mediaUrl {
+                    var success = fbSharePost.addURL(NSURL(string: mediaUrl))
+                    if !success {
+                        NSLog("ERROR: Could not add image URL to fb post")
+                    }
+                }
+                self.presentViewController(fbSharePost, animated: true, completion: nil)
+            } else {
+                var alert = UIAlertController(title: "Sign Into Facebook", message: "Sign into your facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Got it.", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+
+        
+    }
+    
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

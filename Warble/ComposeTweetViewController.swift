@@ -72,7 +72,6 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    
     // TODO doesn't seem to do anything??
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         view.endEditing(true)
@@ -144,11 +143,6 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewDidChange(sender: UITextView) {
-//        if count(tweetTextView.text) >= 140 {
-//            tweetTextView.editable = false
-//        } else {
-//            tweetTextView.editable = true
-//        }
         if let charCount = count(tweetTextView.text) as Int? {
             let remaining = 140 - charCount
             characterCounterLabel.text = "\(remaining)"
@@ -160,9 +154,6 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "tweetDoneSegue" {
-//            
-//        }
     }
 
 }

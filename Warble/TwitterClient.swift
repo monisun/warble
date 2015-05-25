@@ -105,8 +105,6 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         
         POST(tweetJSONUrl, parameters: nil,
             success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                // debug
-                //            println(response)
                 NSLog("Successfully tweeted with status.")
                 completion(result: response as? NSDictionary, error: nil)},
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -121,8 +119,6 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         
         POST(retweetJSONUrl, parameters: nil,
             success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                // debug
-                //            println(response)
                 NSLog("Successfully retweeted a tweet.")
                 completion(result: response as? NSDictionary, error: nil)},
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -137,8 +133,6 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         
         POST(retweetJSONUrl, parameters: nil,
             success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                // debug
-                //  println(response)
                 NSLog("Successfully destroyed a tweet.")
                 completion(result: response as? NSDictionary, error: nil)},
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -153,8 +147,6 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         
         POST(createFavoriteJSONUrl, parameters: nil,
             success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                // debug
-                //            println(response)
                 NSLog("SUCCESS: Request create favorite.")
                 completion(result: response as? NSDictionary, error: nil)},
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -169,8 +161,6 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         
         POST(destroyFavoriteJSONUrl, parameters: nil,
             success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                // debug
-                //            println(response)
                 NSLog("SUCCESS: Request destroy favorite.")
                 completion(result: response as? NSDictionary, error: nil)},
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in

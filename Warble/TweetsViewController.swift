@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Social
 
 class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TweetTableViewCellDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     let pageIndexOffset = 199  // max allowed per Twitter API is 200
@@ -30,17 +31,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         self.navigationItem.titleView = searchBar
         searchBar.delegate = self
-        //        searchBar.showsCancelButton = true
         searchBar.translucent = true
-        
-//        self.tableView.backgroundColor = UIColor(red: CGFloat(194/255), green: CGFloat(1), blue: CGFloat(1), alpha: CGFloat(0.02))
-        
-//        let logoTitleImage = UIImage(named: "logo")
-//        let logoTitleImageView = UIImageView(image: logoTitleImage)
-//        logoTitleImageView.contentMode = UIViewContentMode.ScaleAspectFit
-//        logoTitleImageView.frame.size.height = 20
-//        logoTitleImageView.frame.size.width = 20
-//        self.navigationItem.titleView = logoTitleImageView
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -229,7 +220,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
 
-    
+    // delegate functions
     func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, replyButtonClicked value: Bool) {
         NSLog("replyButtonClicked event")
         currentlySelectedTweet = tweetTableViewCell.tweet
@@ -259,5 +250,33 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             }
         })
     }
-
+    
+    func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, fbShareButtonClicked value: Bool) {
+        NSLog("fbShareButtonClicked event")
+        
+        var referenceText = String()
+        if let authorUsername = tweetTableViewCell.tweet?.user?.username as String? {
+            if let tweetText = tweetTableViewCell.tweet?.text as String? {
+                referenceText = "@\(authorUsername): \(tweetText)"
+            }
+        }
+        
+        if !referenceText.isEmpty {
+            if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) {
+                var fbSharePost: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                fbSharePost.setInitialText(referenceText)
+                if let mediaUrl = tweetTableViewCell.tweet?.mediaUrl {
+                    var success = fbSharePost.addURL(NSURL(string: mediaUrl))
+                    if !success {
+                        NSLog("ERROR: Could not add image URL to fb post")
+                    }
+                }
+                self.presentViewController(fbSharePost, animated: true, completion: nil)
+            } else {
+                var alert = UIAlertController(title: "Sign Into Facebook", message: "Sign into your facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Got it.", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
 }
