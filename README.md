@@ -29,6 +29,7 @@ Time spent: `<Number of hours spent>`
 
 - [x] Added in-memory cache functionality to limit Twitter API requests. (Used as a workaround for API's low rate-limit.) Added handling to clear cache in the case of low memory.
 - [x] Added search bar to allow users to search for tweets.
+- [x] Added media content (images) to tweets.
 - [x] Added delete tweet functionality.
 - [x] Added timestamp display formatting to show _time_ _ago_ similar to Twitter.
 - [x] Added different Reply, Retweet, Favorite button displays for Normal, Highlighted, vs Selected control states.
