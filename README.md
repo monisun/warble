@@ -52,3 +52,8 @@ Time spent: `20 hrs`
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 - [SVProgressHUD](https://github.com/TransitApp/SVProgressHUD)
 - [DateTools](https://github.com/MatthewYork/DateTools)
+
+### License
+Copyright (c) 2015 Monica Sun
+
+Licensed under the MIT license.
