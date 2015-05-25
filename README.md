@@ -41,10 +41,10 @@ Time spent: `20 hrs`
 ### Walkthrough
 *TL: OAuth login; home timeline. TR: fb share integration. BL: Search via Twitter Search API. BR: Tweet composer.*
 
-<img src="https://github.com/monisun/warble/blob/master/demo_loginoauth_hometimeline.gif" width="350px"/>
-<img src="https://github.com/monisun/warble/blob/master/demo_fbshare.gif" width="350px"/>
-<img src="https://github.com/monisun/warble/blob/master/demo_searchbar.gif" width="350px"/>
-<img src="https://github.com/monisun/warble/blob/master/demo_tweetcomposer.gif" width="350px"/>
+<img src="https://github.com/monisun/warble/blob/master/demo_loginoauth_hometimeline.gif" width="300px"/>
+<img src="https://github.com/monisun/warble/blob/master/demo_fbshare.gif" width="300px"/>
+<img src="https://github.com/monisun/warble/blob/master/demo_searchbar.gif" width="300px"/>
+<img src="https://github.com/monisun/warble/blob/master/demo_tweetcomposer.gif" width="300px"/>
 
 ### References
 - [Twitter API](https://apps.twitter.com/)
