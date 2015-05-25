@@ -1,7 +1,7 @@
 # Warble
 Simple Twitter client to view and compose tweets using the [Twitter API](https://apps.twitter.com/).
 
-Time spent: `<Number of hours spent>`
+Time spent: `20 hrs`
 
 ### Features
 
@@ -34,6 +34,7 @@ Time spent: `<Number of hours spent>`
 - [x] Added timestamp display formatting to show _time_ _ago_ similar to Twitter.
 - [x] Added different Reply, Retweet, Favorite button displays for Normal, Highlighted, vs Selected control states.
 - [x] Added HUD to show loading/success state for API requests.
+- [x] Added facebook share integration for tweets.
 
 
 
