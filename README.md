@@ -1,4 +1,4 @@
-# Warble
+# <img src="https://github.com/monisun/warble/blob/master/logo.png" height="300" width="300">
 Simple Twitter client to view and compose tweets using the [Twitter API](https://apps.twitter.com/).
 
 Time spent: `20 hrs`
@@ -39,8 +39,12 @@ Time spent: `20 hrs`
 
 
 ### Walkthrough
+*TL: OAuth login; home timeline. TR: fb share integration. BL: Search via Twitter Search API. BR: Tweet composer.*
 
-![Video Walkthrough](...)
+<img src="https://github.com/monisun/warble/blob/master/demo_loginoauth_hometimeline.gif" width="350px"/>
+<img src="https://github.com/monisun/warble/blob/master/demo_fbshare.gif" width="350px"/>
+<img src="https://github.com/monisun/warble/blob/master/demo_searchbar.gif" width="350px"/>
+<img src="https://github.com/monisun/warble/blob/master/demo_tweetcomposer.gif" width="350px"/>
 
 ### References
 - [Twitter API](https://apps.twitter.com/)
