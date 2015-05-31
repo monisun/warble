@@ -14,16 +14,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     // outlets
     @IBOutlet weak var userTimelineTableView: UITableView!
     @IBOutlet weak var profilePageControl: UIPageControl!
-//    @IBOutlet weak var profileInfoTextView: UITextView!
     @IBOutlet weak var profileBannerImageView: UIImageView!
     
+    @IBOutlet weak var swipeGestureView: UIView!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     
     @IBOutlet weak var taglineLabel: UILabel!
-    
-    @IBOutlet weak var topBannerImageView: UIImageView!
-        
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     
@@ -34,7 +31,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var TWEETS_Label: UILabel!
     @IBOutlet weak var FOLLOWING_label: UILabel!
     @IBOutlet weak var FOLLOWERS_label: UILabel!
-    
     
     // user info
     var name: String?
@@ -51,14 +47,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     var minId: Int?
     
     var profilePageControlSelectedIndex = 0
-    
     var currentlySelectedTweet: Tweet?
-    var originalTopBannerImageViewBounds: CGRect?
-    var originalTopBannerImageViewCenter: CGPoint?
-    var originalTopBannerImageViewOrigin: CGPoint?
+    
+    var lastTranslation = CGPoint(x: 0, y: 0)
+    var startingPoint = CGPoint(x: 0, y: 0) // starting point of Pan Gesture
     
     @IBOutlet weak var bar: UIView!
-    
     
     var user: User! {
         didSet {
@@ -106,23 +100,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         locationLabel.text = user!.dict["location"] as? String
         
-        originalTopBannerImageViewBounds = topBannerImageView.bounds
-        originalTopBannerImageViewCenter = topBannerImageView.center
-        originalTopBannerImageViewOrigin = topBannerImageView.frame.origin
+//        originalTopBannerImageViewBounds = topBannerImageView.bounds
+//        originalTopBannerImageViewCenter = topBannerImageView.center
+//        originalTopBannerImageViewOrigin = topBannerImageView.frame.origin
         
         TwitterClient.sharedInstance.profileBannerForUser(username!, completion: { (url, error) -> () in
             if error != nil {
                 NSLog("ERROR: TwitterClient.sharedInstance.profileBannerForUser: \(error)")
             } else {
                 self.bannerImageUrlString = url
-                self.topBannerImageView.setImageWithURL(NSURL(string: self.bannerImageUrlString!))
+//                self.topBannerImageView.setImageWithURL(NSURL(string: self.bannerImageUrlString!))
                 self.profileBannerImageView.setImageWithURL(NSURL(string: self.bannerImageUrlString!))
             }
         })
-        
-//        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-//        blurEffectView.frame = topBannerImageView.bounds
-//        topBannerImageView.addSubview(blurEffectView)
         
         numTweetsLabel.text = String(numTweets as Int!)
         numFollowingLabel.text = String(numFollowing as Int!)
@@ -146,10 +136,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         locationLabel.textColor = UIColor.darkGrayColor()
         locationLabel.numberOfLines = 1
         
-        topBannerImageView.layer.borderWidth = 4
-        topBannerImageView.layer.borderColor = bar.backgroundColor?.CGColor!
+//        topBannerImageView.layer.borderWidth = 4
+//        topBannerImageView.layer.borderColor = bar.backgroundColor?.CGColor!
         
-        taglineLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        taglineLabel.font = UIFont(name: "HelveticaNeue", size: 12)
         taglineLabel.textColor = UIColor.darkGrayColor()
         taglineLabel.clipsToBounds = true
         
@@ -183,53 +173,42 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         FOLLOWERS_label.textColor = UIColor.darkGrayColor()
         FOLLOWERS_label.numberOfLines = 1
         
-        topBannerImageView.contentMode = UIViewContentMode.ScaleAspectFill
+//        topBannerImageView.contentMode = UIViewContentMode.ScaleAspectFill
         profileBannerImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        self.view.sendSubviewToBack(profileBannerImageView)
         
         // header image pan gesture
         var panRecognizer = UIPanGestureRecognizer(target:self, action:"respondToPanGesture:")
-        topBannerImageView.userInteractionEnabled = true
-        topBannerImageView.addGestureRecognizer(panRecognizer)
-        
+        profileBannerImageView.userInteractionEnabled = true
+        profileBannerImageView.addGestureRecognizer(panRecognizer)
         
         // pageControl swipe gestures
         profilePageControlSelectedIndex = profilePageControl.currentPage
         profilePageControl.addTarget(self, action: "profileControlValueChanged", forControlEvents: UIControlEvents.ValueChanged)
         
         var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeRight.delegate = self
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         swipeRight.numberOfTouchesRequired = 1
-        self.view.addGestureRecognizer(swipeRight)
+        self.swipeGestureView.addGestureRecognizer(swipeRight)
         
         var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeLeft.delegate = self
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         swipeLeft.numberOfTouchesRequired = 1
-        self.view.addGestureRecognizer(swipeLeft)
-        
-//        tweetTextLabel.textAlignment = NSTextAlignment.Left
-//        tweetTextLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-//        tweetTextLabel.numberOfLines = 0
-//        
-//        timestampLabel.textAlignment = NSTextAlignment.Left
-//        timestampLabel.font = UIFont(name: "HelveticaNeue", size: 12)
-//        timestampLabel.textColor = UIColor.darkGrayColor()
-//        timestampLabel.numberOfLines = 1
-//        
-//        retweetCount.numberOfLines = 1
-//        retweetCount.sizeToFit()
-//        retweetCount.font = UIFont(name: "HelveticaNeue", size: CGFloat(10))
-//        retweetCount.textColor = UIColor.darkGrayColor()
-//        
-//        favoriteCount.numberOfLines = 1
-//        favoriteCount.sizeToFit()
-//        favoriteCount.font = UIFont(name: "HelveticaNeue", size: CGFloat(10))
-//        favoriteCount.textColor = UIColor.darkGrayColor()
+        self.swipeGestureView.addGestureRecognizer(swipeLeft)
+        self.view.bringSubviewToFront(swipeGestureView)
+//        originalTopBannerImageViewSize = topBannerImageView.frame.size
 
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     // MARK: - Table view data source
@@ -275,7 +254,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         })
         
-        
         NSLog("page control changed!")
         let selectedPage = profilePageControl.currentPage
         switch selectedPage {
@@ -291,24 +269,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             TWEETS_Label.hidden = true
             FOLLOWERS_label.hidden = true
             FOLLOWING_label.hidden = true
-            
-//            nameLabel.text = name
-//            usernameLabel.text = "@" + username!
-//            locationLabel.text = user!.dict["location"] as? String
-//            
-//            nameLabel.textAlignment = NSTextAlignment.Left
-//            nameLabel.font = UIFont(name: "HelveticaNeue", size: 24)
-//            nameLabel.numberOfLines = 1
-//            
-//            usernameLabel.textAlignment = NSTextAlignment.Left
-//            usernameLabel.font = UIFont(name: "HelveticaNeue", size: 16)
-//            usernameLabel.textColor = UIColor.darkGrayColor()
-//            usernameLabel.numberOfLines = 1
-//            
-//            locationLabel.textAlignment = NSTextAlignment.Left
-//            locationLabel.font = UIFont(name: "HelveticaNeue", size: 12)
-//            locationLabel.textColor = UIColor.darkGrayColor()
-//            locationLabel.numberOfLines = 1
+
         case 1:
             taglineLabel.hidden = false
             
@@ -368,48 +329,38 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func respondToPanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
-        var startingPoint = panGestureRecognizer.locationInView(topBannerImageView) // point of pan gesture
-        var velocity = panGestureRecognizer.velocityInView(topBannerImageView)
+        var velocity = panGestureRecognizer.velocityInView(view)
         
+        let originalW = profileBannerImageView.frame.width
+        let originalH = profileBannerImageView.frame.height
+        let originalSize = CGSizeMake(originalW, originalH)
         
-//        self.center = CGPointMake(lastLocation.x + translation.x, lastLocation.y + translation.y)
+        // TODO
+        let blurEffect: UIBlurEffect = UIBlurEffect(style: .Light)
+        let blurView: UIVisualEffectView = UIVisualEffectView(effect: blurEffect)
+        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if panGestureRecognizer.state == UIGestureRecognizerState.Began {
-            println("Pan Gesture began at: \(startingPoint)")
-            startingPoint = panGestureRecognizer.locationInView(topBannerImageView)
-            
-        } else if panGestureRecognizer.state == UIGestureRecognizerState.Changed {
-            println("Pan Gesture changed at: \(panGestureRecognizer.locationInView(topBannerImageView))")
-            
-            var translation = panGestureRecognizer.translationInView(topBannerImageView)
-            // debug
-            println("translation x: \(translation.x)")
-            println("translation y: \(translation.y)")
-            
-//            self.topBannerImageView.center.y += translation.y/3
-//            self.topBannerImageView.frame.size.height += translation.y
-            
-            UIView.animateWithDuration(1.5, animations: {
-//                self.topBannerImageView.center.y += translation.y
-                self.topBannerImageView.frame.size.height += translation.y
-            })
-            
-//            let scale = translation.y/startingPoint.y
-//            
-//            let size = CGSizeApplyAffineTransform(topBannerImageView.bounds.size, CGAffineTransformMakeScale(scale, scale))
-//            
-//            UIGraphicsBeginImageContextWithOptions(size, true, scale)
-//            topBannerImageView.image!.drawInRect(CGRect(origin: CGPointZero, size: size))
-//            
-//            let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-            
+            startingPoint = panGestureRecognizer.locationInView(view)
         } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
-            println("Pan Gesture ended at: \(panGestureRecognizer.locationInView(topBannerImageView))")
-            UIView.animateWithDuration(1.5, animations: {
-                self.topBannerImageView.center = self.originalTopBannerImageViewCenter!
-                self.topBannerImageView.bounds = self.originalTopBannerImageViewBounds!
-                self.topBannerImageView.frame.origin = self.originalTopBannerImageViewOrigin!
+            let finalTranslation = panGestureRecognizer.translationInView(self.view)
+            let scale = 1 + finalTranslation.y / startingPoint.y
+            // debug
+            println(scale)
+            println(finalTranslation.y)
+            println(startingPoint.y)
+            
+            let scaledSize = CGSizeMake(originalW * scale, originalH * scale)
+            
+            UIView.animateWithDuration(5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                    self.profileBannerImageView.frame.size = scaledSize
+//                    self.profileBannerImageView.addSubview(blurView)
+                    self.profileBannerImageView.alpha = 0.1
+                
+                }, completion: { (Bool) -> Void in
+                    NSLog("completion")
+                    self.profileBannerImageView.frame.size = originalSize
+                    self.profileBannerImageView.alpha = 0.4
             })
         }
     }
@@ -422,7 +373,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
         if segue.identifier == "showTweetSegueFromUserTimeline" {
             let showTweetViewController = segue.destinationViewController as! ShowTweetViewController
             showTweetViewController.tweet = currentlySelectedTweet
