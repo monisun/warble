@@ -52,6 +52,77 @@
             </objects>
             <point key="canvasLocation" x="-323" y="573"/>
         </scene>
+        <!--Side Panel View Controller-->
+        <scene sceneID="Fay-0C-hNv">
+            <objects>
+                <viewController storyboardIdentifier="SidePanelViewController" id="zbi-XG-foE" userLabel="Side Panel View Controller" customClass="SidePanelViewController" customModule="Warble" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HH2-hl-AW8"/>
+                        <viewControllerLayoutGuide type="bottom" id="Rdf-Bt-lPG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UCQ-Tg-q8i" userLabel="Hamburger Menu View">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="111" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vGJ-SC-5CO">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.084227092559999994" green="0.76770645380000002" blue="0.87345004079999999" alpha="0.16" colorSpace="calibratedRGB"/>
+                                <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" id="EOL-Zx-t4M" userLabel="Logo Image View">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="83"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.084227092564105988" green="0.76770645380020142" blue="0.87345004081726074" alpha="0.16" colorSpace="calibratedRGB"/>
+                                </imageView>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuCell" rowHeight="111" id="uMB-fU-MUJ" userLabel="Menu Item Table View Cell" customClass="MenuItemTableViewCell" customModule="Warble" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uMB-fU-MUJ" id="ApB-ah-PkH">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="chz-Z2-KqU">
+                                                    <rect key="frame" x="8" y="25" width="50" height="50"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="tintColor" red="0.084227093269999997" green="0.76770647530000002" blue="0.87345006700000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="PROFILE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FgZ-Nq-f3B">
+                                                    <rect key="frame" x="79" y="25" width="133" height="50"/>
+                                                    <color key="tintColor" red="0.084227093269999997" green="0.76770647530000002" blue="0.87345006700000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="n27-Fs-2Lk"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.084227092559999994" green="0.76770645380000002" blue="0.87345004079999999" alpha="0.16" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="FgZ-Nq-f3B" firstAttribute="bottom" secondItem="chz-Z2-KqU" secondAttribute="bottom" id="DT2-nP-tso"/>
+                                                <constraint firstItem="FgZ-Nq-f3B" firstAttribute="top" secondItem="chz-Z2-KqU" secondAttribute="top" id="PMV-MX-4EK"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="FgZ-Nq-f3B" secondAttribute="trailing" constant="10" id="xeF-v6-QL4"/>
+                                                <constraint firstItem="FgZ-Nq-f3B" firstAttribute="leading" secondItem="chz-Z2-KqU" secondAttribute="trailing" constant="10" id="yic-31-rwO"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.084227092559999994" green="0.76770645380000002" blue="0.87345004079999999" alpha="0.16" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="menuItemImageView" destination="chz-Z2-KqU" id="EuW-7s-M5I"/>
+                                            <outlet property="menuLabel" destination="FgZ-Nq-f3B" id="DNL-It-IwJ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.084227093269999997" green="0.76770647530000002" blue="0.87345006700000005" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="logoImageView" destination="EOL-Zx-t4M" id="R0f-bt-c0y"/>
+                        <outlet property="tableView" destination="vGJ-SC-5CO" id="NK1-fs-Cie"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ccb-yU-6oc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-426" y="-102"/>
+        </scene>
         <!--Profile View Controller-->
         <scene sceneID="2vc-yQ-ubQ">
             <objects>
@@ -420,10 +491,10 @@
             </objects>
             <point key="canvasLocation" x="-4" y="-107"/>
         </scene>
-        <!--Tweets View Controller-->
+        <!--Center View Controller-->
         <scene sceneID="6ji-i4-dAY">
             <objects>
-                <viewController storyboardIdentifier="TweetsViewController" id="ODl-g2-WN3" customClass="TweetsViewController" customModule="Warble" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CenterViewController" id="ODl-g2-WN3" customClass="CenterViewController" customModule="Warble" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NgI-hn-b3y"/>
                         <viewControllerLayoutGuide type="bottom" id="7Kt-fx-X3U"/>
@@ -663,6 +734,7 @@
                         <segue destination="5v6-hP-YTe" kind="modal" identifier="showTweetSegue" id="Mfq-TM-yvV"/>
                         <segue destination="Gxh-Np-0Sd" kind="modal" identifier="replyToTweetFromHomeTimelineSegue" id="v1d-c9-C6c"/>
                         <segue destination="g2U-tN-dww" kind="modal" identifier="showUserSegue" id="Vax-MX-K7k"/>
+                        <segue destination="g2U-tN-dww" kind="modal" identifier="menuShowUserProfile" id="nI3-EJ-UTJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8dc-jT-pz8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1030,8 +1102,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fWh-ay-Sxx"/>
-        <segue reference="Hla-xM-Ioo"/>
-        <segue reference="OD1-Lp-L5k"/>
+        <segue reference="gha-ck-a2I"/>
+        <segue reference="v1d-c9-C6c"/>
+        <segue reference="Mfq-TM-yvV"/>
+        <segue reference="nI3-EJ-UTJ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -106,7 +106,8 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
                             self.dismissViewControllerAnimated(true, completion: nil)
                         } else {
                             // nav back to home timeline
-                            let tweetViewController = self.presentingViewController as! TweetsViewController!
+//                            let tweetViewController = self.presentingViewController as! TweetsViewController!
+                            let tweetViewController = self.presentingViewController as! CenterViewController!
                             // TODO reloadData() did not always refresh correctly, as tweets[] was already populated before new tweet got to home timeline (?)
                             // tweetViewController.tableView.reloadData()
                             

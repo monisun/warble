@@ -352,7 +352,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
             let scaledSize = CGSizeMake(originalW * scale, originalH * scale)
             
-            UIView.animateWithDuration(5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animateWithDuration(3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                     self.profileBannerImageView.frame.size = scaledSize
 //                    self.profileBannerImageView.addSubview(blurView)
                     self.profileBannerImageView.alpha = 0.1

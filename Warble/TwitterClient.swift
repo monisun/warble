@@ -254,6 +254,30 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         })
     }
     
+    func mentionsTimeline(maxId: Int?, completion: (tweets: [Tweet]?, minId: Int?, error: NSError?) -> ()) {
+        // get mentions timeline
+        var mentionsTimelineUrl = "1.1/statuses/mentions_timeline.json?count=50"
+        
+        if let maxId = maxId as Int! {
+            mentionsTimelineUrl += "&max_id=\(maxId)"
+        }
+        
+        mentionsTimelineUrl = mentionsTimelineUrl.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        GET(mentionsTimelineUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                NSLog("Successfully got mentions timeline.")
+                
+                var tweetsData = Tweet.tweetsWithArray(response as! [NSDictionary]) as ([Tweet], Int)
+                var tweets = tweetsData.0
+                var minId = tweetsData.1
+                completion(tweets: tweets, minId: minId, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error getting mentions timeline: \(error.description)")
+                completion(tweets: nil, minId: nil, error: error)
+        })
+    }
+    
     // test data
 //    private func test_hometimeline_data() -> NSArray {
 //        let path = NSBundle.mainBundle().pathForResource("hometimeline", ofType: "json")
