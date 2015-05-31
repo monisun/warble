@@ -71,7 +71,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     
     func homeTimelineWithParams(params: NSDictionary?, maxId: Int?, completion: (tweets: [Tweet]?, minId: Int?, error: NSError?) -> ()) {
         // get home timeline
-        var homeTimelineUrl = "1.1/statuses/home_timeline.json?count=200"
+        var homeTimelineUrl = "1.1/statuses/home_timeline.json?count=100"   // 200 is max
         
         if let maxId = maxId as Int! {
             homeTimelineUrl += "&max_id=\(maxId)"
@@ -82,6 +82,11 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
             success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
                 //          var homeTimelineAsJson = NSJSONSerialization.JSONObjectWithData(response! as? NSArray, options: nil, error: nil) as! [NSDictionary]
                 NSLog("Successfully got home timeline.")
+                
+                // debug
+//                println(response)
+//                let path = NSBundle.mainBundle().pathForResource("hometimeline", ofType: "json")
+//                response.writeToFile(path!, options: NSDataWritingOptions.DataWritingFileProtectionCompleteUnlessOpen, error: nil)
                 
                 var tweetsData = Tweet.tweetsWithArray(response as! [NSDictionary]) as ([Tweet], Int)
                 var tweets = tweetsData.0
@@ -188,5 +193,72 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
                 completion(tweets: nil, minId: nil, error: error)
         })
     }
-
+    
+    func profileBannerForUser(userName: String, completion: (url: String?, error: NSError?) -> ()) {
+        // DEBUG test data
+//        let url = "https://pbs.twimg.com/profile_banners/42220353/1418990349/mobile"
+//        completion(url: url, error: nil)
+        
+        // get profile banner for user
+        var profileBannerUrl = "1.1/users/profile_banner.json?screen_name=\(userName)"
+        
+        profileBannerUrl = profileBannerUrl.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        GET(profileBannerUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                NSLog("Successfully got profile banner.")
+                
+                if let result = response as? NSDictionary {
+                    if let sizes = result["sizes"] as? NSDictionary {
+                        if let mobile = sizes["mobile"] as? NSDictionary {
+                            if let url = mobile["url"] as? String {
+                                //debug
+                                println("url")
+                                println(url)
+                                completion(url: url, error: nil)
+                            }
+                        }
+                    }
+                }
+            },
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error getting profile banner: \(error.description)")
+                completion(url: nil, error: error)
+        })
+    }
+    
+    func userTimelineWithParams(username: String, maxId: Int?, completion: (tweets: [Tweet]?, minId: Int?, error: NSError?) -> ()) {
+        // get user timeline
+        var userTimelineUrl = "1.1/statuses/user_timeline.json?count=50&screen_name=\(username)"
+        
+        if let maxId = maxId as Int! {
+            userTimelineUrl += "&max_id=\(maxId)"
+        }
+        
+        userTimelineUrl = userTimelineUrl.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        GET(userTimelineUrl, parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                NSLog("Successfully got user timeline.")
+                
+                // debug
+//                println(response)
+                
+                var tweetsData = Tweet.tweetsWithArray(response as! [NSDictionary]) as ([Tweet], Int)
+                var tweets = tweetsData.0
+                var minId = tweetsData.1
+                completion(tweets: tweets, minId: minId, error: nil)},
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error getting home timeline: \(error.description)")
+                completion(tweets: nil, minId: nil, error: error)
+        })
+    }
+    
+    // test data
+//    private func test_hometimeline_data() -> NSArray {
+//        let path = NSBundle.mainBundle().pathForResource("hometimeline", ofType: "json")
+//        let jsonData = NSData(contentsOfFile: path!)
+//        var jsonResult: NSArray = NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSArray
+//        return jsonResult
+//    }
 }

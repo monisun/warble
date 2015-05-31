@@ -36,7 +36,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         self.tableView.dataSource = self
         self.tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 120
+        tableView.estimatedRowHeight = 200
         
         // initial request for landing page
         SVProgressHUD.showProgress(1, status: "Loading...")
@@ -230,6 +230,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             composeViewController.replyToTweetId = currentlySelectedTweet?.tweetId
             composeViewController.tweetTextPrefix = "@" + (currentlySelectedTweet?.user?.username as String!)
         }
+        
+        if segue.identifier == "showUserSegue" {
+            let profileViewController = segue.destinationViewController as! ProfileViewController
+            profileViewController.user = currentlySelectedTweet?.user
+        }
     }
 
     // delegate functions
@@ -290,5 +295,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
+    }
+    
+    func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, profileImageClicked username: String) {
+        NSLog("profileImageClicked event")
+        currentlySelectedTweet = tweetTableViewCell.tweet
+        performSegueWithIdentifier("showUserSegue", sender: self)
     }
 }

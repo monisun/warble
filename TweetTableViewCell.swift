@@ -14,6 +14,8 @@ import UIKit
     optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, deleteButtonClicked value: Bool)
     
     optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, fbShareButtonClicked value: Bool)
+    
+    optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, profileImageClicked username: String)
 }
 
 class TweetTableViewCell: UITableViewCell {
@@ -132,6 +134,10 @@ class TweetTableViewCell: UITableViewCell {
         mediaImageView.hidden = true
         
         fbShareButton.addTarget(self, action: "fbShareButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        var profileImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("profileImageTapped"))
+        profileImage.addGestureRecognizer(profileImageTapGestureRecognizer)
+        profileImage.userInteractionEnabled = true
     }
     
     override func layoutSubviews() {
@@ -230,6 +236,10 @@ class TweetTableViewCell: UITableViewCell {
         }
     }
     
+    func profileImageTapped() {
+        profileImageClicked()
+    }
+    
     func replyButtonClicked() {
         replyButton.selected = true
         NSLog("replyButtonClicked")
@@ -248,6 +258,10 @@ class TweetTableViewCell: UITableViewCell {
         delegate?.tweetTableViewCell?(self, fbShareButtonClicked: fbShareButton.selected)
     }
     
-    
+    func profileImageClicked() {
+        NSLog("profileImageClicked delegate event")
+        let username = tweet.user?.username as String!
+        delegate?.tweetTableViewCell?(self, profileImageClicked: username)
+    }
 
 }

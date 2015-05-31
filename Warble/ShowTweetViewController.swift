@@ -78,7 +78,6 @@ class ShowTweetViewController: UIViewController {
             favoriteCount.text = String(tweet.favoriteCount as Int!)
             
             // styling
-            // styling
             nameLabel.textAlignment = NSTextAlignment.Left
             nameLabel.font = UIFont(name: "HelveticaNeue", size: 14)
             nameLabel.numberOfLines = 1
