@@ -20,7 +20,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
     
     var delegate: SidePanelViewControllerDelegate?
     
-    let menuItems = ["profile", "home", "mentions"]
+    let menuItems = ["profile", "home", "mentions", "logout"]
     
     override func viewDidLoad() {
         super.viewDidLoad()

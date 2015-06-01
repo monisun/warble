@@ -81,9 +81,9 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     
-    @IBAction func onLogout(sender: AnyObject) {
-        User.currentUser?.logout()
-    }
+//    @IBAction func onLogout(sender: AnyObject) {
+//        User.currentUser?.logout()
+//    }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchActive = true
@@ -370,6 +370,8 @@ extension TweetsViewController: SidePanelViewControllerDelegate {
                     self.mentionsMinId = minId
                 }
             })
+        case "logout":
+            User.currentUser?.logout()
             
         default:
             NSLog("UNEXPECTED: hamburger menu selected item: \(selectedMenuItem)")
