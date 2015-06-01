@@ -252,6 +252,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             let profileViewController = segue.destinationViewController as! ProfileViewController
             profileViewController.user = User.currentUser
         }
+        
+        if segue.identifier == "showContainerVC" {
+            let containerVC = segue.destinationViewController as! ContainerViewController
+            containerVC.toggleLeftPanelImmediately = true            
+        }
     }
 
     // delegate functions
@@ -321,9 +326,14 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     @IBAction func menuButtonClicked(sender: AnyObject) {
-        let mainStoryBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let containerViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("ContainerViewController") as? ContainerViewController
-        containerViewController!.toggleLeftPanel()
+        performSegueWithIdentifier("showContainerVC", sender: self)
+        
+//        let mainStoryBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//        let containerViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("ContainerViewController") as? ContainerViewController
+//        addChildViewController(containerViewController!)
+//        containerViewController!.didMoveToParentViewController(self)
+//        
+//        containerViewController!.toggleLeftPanel()
     }
     
 }

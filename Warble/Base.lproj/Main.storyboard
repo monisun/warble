@@ -540,7 +540,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="menuButtonClicked:" destination="ODl-g2-WN3" eventType="touchUpInside" id="ReP-d7-jdJ"/>
-                                                    <segue destination="bVv-WF-Cmq" kind="modal" id="4Hz-Gt-Ppo"/>
                                                 </connections>
                                             </button>
                                         </barButtonItem>
@@ -757,6 +756,7 @@
                         <segue destination="Gxh-Np-0Sd" kind="modal" identifier="replyToTweetFromHomeTimelineSegue" id="v1d-c9-C6c"/>
                         <segue destination="g2U-tN-dww" kind="modal" identifier="showUserSegue" id="Vax-MX-K7k"/>
                         <segue destination="g2U-tN-dww" kind="modal" identifier="menuShowUserProfile" id="nI3-EJ-UTJ"/>
+                        <segue destination="bVv-WF-Cmq" kind="modal" identifier="showContainerVC" id="LNy-5a-Gum"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8dc-jT-pz8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1125,10 +1125,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4Hz-Gt-Ppo"/>
         <segue reference="zBO-Q9-vDQ"/>
-        <segue reference="v1d-c9-C6c"/>
-        <segue reference="Mfq-TM-yvV"/>
+        <segue reference="LNy-5a-Gum"/>
         <segue reference="nI3-EJ-UTJ"/>
+        <segue reference="Mfq-TM-yvV"/>
+        <segue reference="v1d-c9-C6c"/>
     </inferredMetricsTieBreakers>
 </document>

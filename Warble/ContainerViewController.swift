@@ -16,6 +16,8 @@ enum SlideOutState {
 
 class ContainerViewController: UIViewController {
     
+    var toggleLeftPanelImmediately = false
+    
     var centerNavigationController: UINavigationController!
     var centerViewController: TweetsViewController!
     
@@ -47,6 +49,10 @@ class ContainerViewController: UIViewController {
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
+        
+        if toggleLeftPanelImmediately {
+            toggleLeftPanel()
+        }
     }
 
     override func didReceiveMemoryWarning() {
