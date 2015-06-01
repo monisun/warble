@@ -21,12 +21,12 @@ Time spent: `21 hrs`
   - [x] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
 
 #### Additional
-- [x] Added media content support for Tweets. (See gif below taken on device: Using iPhone camera to take a pic and display image preview from Tweet Composer. *Note: Twitter API to upload media returned 503 Service Unavailable.)
+- [x] Added media content support for creating tweets. (See gif below taken on device: Using iPhone camera to take a pic and display image preview from Tweet Composer. *Note: Twitter API to upload media returned 503 Service Unavailable.)
 
 ### Walkthrough
-<img src="https://github.com/monisun/warble/blob/redux/redux_hamburger_menu.gif" width="300px"/>
-<img src="https://github.com/monisun/warble/blob/redux/redux_hamburger_menu2.gif" width="300px"/>
-<img src="http://share.gifyoutube.com/Kke3jq.gif" width="300px"/>
+<img src="https://github.com/monisun/warble/blob/redux/redux_hamburger_menu.gif" width="250px"/>
+<img src="http://share.gifyoutube.com/Kke3jq.gif" width="250px"/>
+<img src="https://github.com/monisun/warble/blob/redux/redux_hamburger_menu2.gif" width="250px"/>
 
 
 # <img src="https://github.com/monisun/warble/blob/master/logo.png" height="300" width="300">
