@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ComposeTweetViewController: UIViewController, UITextViewDelegate {
+class ComposeTweetViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     var user = User(dict: NSDictionary())
     var replyToTweetId: Int?
@@ -21,8 +21,15 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var characterCounterLabel: UILabel!
     @IBOutlet weak var tweetTextView: UITextView!
 
+    @IBOutlet weak var photoImageView: UIImageView!
+    
+    var imagePickerVC: UIImagePickerController!
+    var mediaId: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        photoImageView.hidden = true
         
         tweetTextView.delegate = self
         
@@ -150,6 +157,46 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    
+    @IBAction func cameraButtonClicked(sender: AnyObject) {
+        imagePickerVC =  UIImagePickerController()
+        imagePickerVC.delegate = self
+        imagePickerVC.sourceType = .Camera
+        
+        presentViewController(imagePickerVC, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        imagePickerVC.dismissViewControllerAnimated(true, completion: nil)
+        photoImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        photoImageView.hidden = false
+        
+        // attempt media upload request
+        let imageData = UIImageJPEGRepresentation(photoImageView.image!, 0.9)
+        let imageString = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.allZeros)
+        let parameters = ["media": imageString]
+        
+        TwitterClient.sharedUploadInstance.requestSerializer.setValue("multipart/form-data;", forHTTPHeaderField: "Content-Type")
+        
+        // sample header values
+        TwitterClient.sharedUploadInstance.requestSerializer.setValue("EprTm2EfvGFT21BnsUNZyOd0r", forHTTPHeaderField: "oauth_consumer_key")
+        TwitterClient.sharedUploadInstance.requestSerializer.setValue("48d7c012c0ab645a5b619c12847d077f", forHTTPHeaderField: "oauth_nonce")
+        TwitterClient.sharedUploadInstance.requestSerializer.setValue("t9Ytdd9ANhg9MWP%2FQTPWiAjZSxxxM%3D", forHTTPHeaderField: "oauth_signature")
+        TwitterClient.sharedUploadInstance.requestSerializer.setValue("HMAC-SHA1", forHTTPHeaderField: "oauth_signature_method")
+        TwitterClient.sharedUploadInstance.requestSerializer.setValue("1433137708", forHTTPHeaderField: "oauth_timestamp")
+        TwitterClient.sharedUploadInstance.requestSerializer.setValue("24dd798422-dwmdXNHaKxWqbbLT2H5edGVv9yP3FdPJDeJ2SWzh2", forHTTPHeaderField: "oauth_token")
+        TwitterClient.sharedUploadInstance.requestSerializer.setValue("1.0", forHTTPHeaderField: "oauth_version")
+        
+        TwitterClient.sharedUploadInstance.uploadMediaWithParameters(parameters, completion: { (mediaId: Int?, error: NSError?) -> () in
+            if let mediaId = mediaId as Int? {
+                // debug
+                NSLog("mediaId: \(mediaId)")
+                self.mediaId = mediaId
+            } else if error != nil {
+                NSLog("ERROR: uploadMediaWithParameters: \(error?.description)")
+            }
+        })
+    }
     
     // MARK: - Navigation
 

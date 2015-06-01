@@ -12,6 +12,7 @@ import UIKit
 let twitterConsumerKey = "EprTm2EfvGFT21BnsUNZyOd0r"
 let twitterConsumerSecret = "syq358u0WF9HCeeGKLuvqTwf6gwihrNLkrLQebmwam6TyGxDar"
 let twitterBaseURL = NSURL(string: "https://api.twitter.com")
+let twitterUploadBaseURL = NSURL(string: "https://upload.twitter.com")
 
 class TwitterClient: BDBOAuth1RequestOperationManager {
     
@@ -22,6 +23,13 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
             static let instance =  TwitterClient(baseURL: twitterBaseURL, consumerKey: twitterConsumerKey, consumerSecret: twitterConsumerSecret)
         }
         return Static.instance
+    }
+    
+    class var sharedUploadInstance: TwitterClient {
+        struct StaticUpload {
+            static let uploadInstance = TwitterClient(baseURL: twitterUploadBaseURL, consumerKey: twitterConsumerKey, consumerSecret: twitterConsumerSecret)
+        }
+        return StaticUpload.uploadInstance
     }
     
     func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {
@@ -275,6 +283,24 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
             failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 NSLog("Error getting mentions timeline: \(error.description)")
                 completion(tweets: nil, minId: nil, error: error)
+        })
+    }
+    
+    func uploadMediaWithParameters(parameters: NSDictionary?, completion: (mediaId: Int?, error: NSError?) -> ()) {
+        var url = "1.1/media/upload.json"
+        url = url.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        
+        POST(url, parameters: parameters,
+            success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                NSLog("Successfully uploaded media.")
+                
+                if let response = response as! NSDictionary? {
+                    var mediaId = response["media_id"] as! Int?
+                    completion(mediaId: mediaId, error: nil)
+                }
+            }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                NSLog("Error uploading media: \(error.description)")
+                completion(mediaId: nil, error: error)
         })
     }
     
