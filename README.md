@@ -1,4 +1,4 @@
-### Twitter Redux
+### Warble Redux
 
 Time spent: `21 hrs`
 
@@ -6,21 +6,22 @@ Time spent: `21 hrs`
 
 #### Required
 - [x] Hamburger menu
-- [x] Dragging anywhere in the view should reveal the menu.
-- [x] The menu should include links to your profile, the home timeline, and the mentions view.
-- [x] The menu can look similar to the LinkedIn menu.
+  - [x] Dragging anywhere in the view should reveal the menu.
+  - [x] The menu should include links to your profile, the home timeline, and the mentions view.
+  - [x] The menu can look similar to the LinkedIn menu.
 - [x] Profile page
-- [x] Tapping on a user image should bring up that user's profile page
-- [x] Contains a section with the users basic stats: # tweets, # following, # followers
-- [x] Contains the user header view
+  - [x] Tapping on a user image should bring up that user's profile page
+  - [x] Contains a section with the users basic stats: # tweets, # following, # followers 
+  - [x] Contains the user header view
 
 #### Optional
-- [x] Pulling down the profile page should blur and resize the header image.
-- [x] Implement the paging view for the user description.
-- [x] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
+- [x] Profile page
+  - [x] Pulling down the profile page should blur and resize the header image.
+  - [x] Implement the paging view for the user description.
+  - [x] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
 
 #### Additional
-- [x] Added media content support for Tweets.
+- [x] Added media content support for Tweets. (See gif below taken on device: Using iPhone camera to take a pic and display image preview from Tweet Composer. *Note: Twitter API to upload media returned 503 Service Unavailable.)
 
 ### Walkthrough
 <img src="https://github.com/monisun/warble/blob/redux/redux_hamburger_menu.gif" width="300px"/>
