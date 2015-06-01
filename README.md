@@ -10,9 +10,10 @@ Time spent: `21 hrs`
   - [x] The menu should include links to your profile, the home timeline, and the mentions view.
   - [x] The menu can look similar to the LinkedIn menu.
 - [x] Profile page
-  - [x] Tapping on a user image should bring up that user's profile page
   - [x] Contains a section with the users basic stats: # tweets, # following, # followers 
   - [x] Contains the user header view
+- [x] Home Timeline
+  - [x] Tapping on a user image should bring up that user's profile page
 
 #### Optional
 - [x] Profile page
