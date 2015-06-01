@@ -17,7 +17,7 @@ enum SlideOutState {
 class ContainerViewController: UIViewController {
     
     var centerNavigationController: UINavigationController!
-    var centerViewController: CenterViewController!
+    var centerViewController: TweetsViewController!
     
     var currentState: SlideOutState = .BothCollapsed {
         didSet {
@@ -56,7 +56,7 @@ class ContainerViewController: UIViewController {
 }
 
 // MARK: CenterViewController delegate
-extension ContainerViewController: CenterViewControllerDelegate {
+extension ContainerViewController: TweetsViewControllerDelegate {
     
     func toggleLeftPanel() {
         let notAlreadyExpanded = (currentState != .LeftPanelExpanded)
@@ -104,6 +104,8 @@ extension ContainerViewController: CenterViewControllerDelegate {
                 
                 self.leftViewController!.view.removeFromSuperview()
                 self.leftViewController = nil;
+                
+                self.centerViewController.tableView.reloadData()
             }
         }
     }
@@ -163,8 +165,8 @@ private extension UIStoryboard {
         return mainStoryboard().instantiateViewControllerWithIdentifier("SidePanelViewController") as? SidePanelViewController
     }
     
-    class func centerViewController() -> CenterViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("CenterViewController") as? CenterViewController
+    class func centerViewController() -> TweetsViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("TweetsViewController") as? TweetsViewController
     }
     
 }

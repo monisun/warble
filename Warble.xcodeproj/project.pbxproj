@@ -12,7 +12,6 @@
 		982410631B1B950800901DA4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982410621B1B950800901DA4 /* ContainerViewController.swift */; };
 		982410651B1B96D000901DA4 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982410641B1B96D000901DA4 /* SidePanelViewController.swift */; };
 		982410671B1B9A9500901DA4 /* MenuItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982410661B1B9A9500901DA4 /* MenuItemTableViewCell.swift */; };
-		982410691B1B9DC300901DA4 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982410681B1B9DC300901DA4 /* CenterViewController.swift */; };
 		9836B0C01B118AFF00500E14 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9836B0BF1B118AFF00500E14 /* DataCache.swift */; };
 		984C08671B193F8400C7E972 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C08661B193F8400C7E972 /* ProfileViewController.swift */; };
 		984C08691B19855B00C7E972 /* blah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984C08681B19855B00C7E972 /* blah.swift */; };
@@ -49,7 +48,6 @@
 		982410621B1B950800901DA4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		982410641B1B96D000901DA4 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
 		982410661B1B9A9500901DA4 /* MenuItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemTableViewCell.swift; sourceTree = "<group>"; };
-		982410681B1B9DC300901DA4 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
 		9836B0BF1B118AFF00500E14 /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 		984C08661B193F8400C7E972 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		984C08681B19855B00C7E972 /* blah.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = blah.swift; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 				984C08681B19855B00C7E972 /* blah.swift */,
 				982410621B1B950800901DA4 /* ContainerViewController.swift */,
 				982410641B1B96D000901DA4 /* SidePanelViewController.swift */,
-				982410681B1B9DC300901DA4 /* CenterViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -359,7 +356,6 @@
 				982410631B1B950800901DA4 /* ContainerViewController.swift in Sources */,
 				987688B71B0D4F4F00B9A102 /* LoginViewController.swift in Sources */,
 				982410651B1B96D000901DA4 /* SidePanelViewController.swift in Sources */,
-				982410691B1B9DC300901DA4 /* CenterViewController.swift in Sources */,
 				9856889F1B0E82F900166508 /* Tweet.swift in Sources */,
 				984C08691B19855B00C7E972 /* blah.swift in Sources */,
 				985688A21B0E933E00166508 /* TweetsViewController.swift in Sources */,

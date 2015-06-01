@@ -9,12 +9,23 @@
 import UIKit
 import Social
 
+@objc protocol TweetsViewControllerDelegate {
+    optional func toggleLeftPanel()
+    optional func collapseSidePanels()
+}
+
 class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TweetTableViewCellDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
+    var delegate: TweetsViewControllerDelegate?
+    
     let pageIndexOffset = 199  // max allowed per Twitter API is 200
     var minId: Int?             // min tweet id of currently fetched tweets
+    var mentionsMinId: Int?
     let maxNumTweetsToKeepInMemory = 1000
     
     var tweets = [Tweet]()
+    var homeTweets = [Tweet]()
+    var mentionsTweets = [Tweet]()
+    
     var refreshControl = UIRefreshControl()
     var currentlySelectedTweet: Tweet?
     
@@ -29,7 +40,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.titleView = searchBar
+        self.navigationController?.navigationItem.titleView = searchBar
         searchBar.delegate = self
         searchBar.translucent = true
         
@@ -45,6 +56,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 SVProgressHUD.dismiss()
                 NSLog("ERROR: TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
             } else {
+                self.homeTweets = self.tweets
                 self.tweets = tweets!
                 self.tableView.reloadData()
                 self.minId = minId
@@ -57,7 +69,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.tableView.reloadData()
+//        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -138,7 +150,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 NSLog("ERROR: tweets[] does not contain index: \(indexPath.row)")
             }
             
-            if (indexPath.row == tweets.count - 1) || ((indexPath.row > 0) && (indexPath.row % pageIndexOffset == 0)) {
+            if (indexPath.row == tweets.count - 1 && tweets.count >= 100) || ((indexPath.row > 0) && (indexPath.row % pageIndexOffset == 0)) {
                 
                 // fetch more results
                 let maxIdForRequest = minId! - 1
@@ -235,6 +247,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             let profileViewController = segue.destinationViewController as! ProfileViewController
             profileViewController.user = currentlySelectedTweet?.user
         }
+        
+        if segue.identifier == "menuShowUserProfile" {
+            let profileViewController = segue.destinationViewController as! ProfileViewController
+            profileViewController.user = User.currentUser
+        }
     }
 
     // delegate functions
@@ -302,4 +319,55 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         currentlySelectedTweet = tweetTableViewCell.tweet
         performSegueWithIdentifier("showUserSegue", sender: self)
     }
+    
+    @IBAction func menuButtonClicked(sender: AnyObject) {
+        let mainStoryBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let containerViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("ContainerViewController") as? ContainerViewController
+        containerViewController!.toggleLeftPanel()
+    }
+    
 }
+
+extension TweetsViewController: SidePanelViewControllerDelegate {
+    func menuItemSelected(selectedMenuItem: String) {
+        switch selectedMenuItem {
+        case "profile":
+            NSLog("hamburger menu: show user profile!")
+            performSegueWithIdentifier("menuShowUserProfile", sender: self)
+            
+        case "home":
+            NSLog("hamburger menu: show home timeline!")
+            
+            TwitterClient.sharedInstance.homeTimelineWithParams(nil, maxId: nil, completion: { (tweets, minId, error) -> () in
+                if error != nil {
+                    NSLog("ERROR: TwitterClient.sharedInstance.homeTimelineWithParams: \(error)")
+                } else {
+                    self.homeTweets = tweets!
+                    self.tweets = self.homeTweets
+                    self.minId = minId
+                }
+            })
+            
+        case "mentions":
+            NSLog("hamburger menu: show mentions page!")
+            
+            TwitterClient.sharedInstance.mentionsTimeline(nil, completion: { (mentions, minId, error) -> () in
+                if error != nil {
+                    NSLog("ERROR: TwitterClient.sharedInstance.mentionsTimeline: \(error)")
+                } else {
+                    self.mentionsTweets = mentions!
+                    self.tweets = self.mentionsTweets
+                    self.mentionsMinId = minId
+                }
+            })
+            
+        default:
+            NSLog("UNEXPECTED: hamburger menu selected item: \(selectedMenuItem)")
+        }
+        delegate?.collapseSidePanels?()
+    }
+}
+
+
+
+

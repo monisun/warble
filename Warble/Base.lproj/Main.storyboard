@@ -45,12 +45,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="ODl-g2-WN3" kind="modal" identifier="loginSegue" id="gha-ck-a2I"/>
+                        <segue destination="bVv-WF-Cmq" kind="modal" identifier="loginSegue" id="IH2-1O-m4s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-323" y="573"/>
+            <point key="canvasLocation" x="-593" y="573"/>
         </scene>
         <!--Side Panel View Controller-->
         <scene sceneID="Fay-0C-hNv">
@@ -491,10 +491,31 @@
             </objects>
             <point key="canvasLocation" x="-4" y="-107"/>
         </scene>
-        <!--Center View Controller-->
+        <!--Container View Controller-->
+        <scene sceneID="yrY-Vo-qh4">
+            <objects>
+                <viewController storyboardIdentifier="ContainerViewController" id="bVv-WF-Cmq" userLabel="Container View Controller" customClass="ContainerViewController" customModule="Warble" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zNv-qp-N7m"/>
+                        <viewControllerLayoutGuide type="bottom" id="0zf-Tg-Nhh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="432-XI-f6R">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="ODl-g2-WN3" kind="modal" identifier="showHomeTimelineSegue" id="zBO-Q9-vDQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jtU-Vd-sCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-185" y="573"/>
+        </scene>
+        <!--Tweets View Controller-->
         <scene sceneID="6ji-i4-dAY">
             <objects>
-                <viewController storyboardIdentifier="CenterViewController" id="ODl-g2-WN3" customClass="CenterViewController" customModule="Warble" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TweetsViewController" id="ODl-g2-WN3" customClass="TweetsViewController" customModule="Warble" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NgI-hn-b3y"/>
                         <viewControllerLayoutGuide type="bottom" id="7Kt-fx-X3U"/>
@@ -508,17 +529,18 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem id="qA6-3O-PWQ">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" id="h17-4v-0cM">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mQa-vl-58N">
-                                                <rect key="frame" x="136" y="140" width="49" height="30"/>
+                                        <barButtonItem key="leftBarButtonItem" style="plain" id="h17-4v-0cM" userLabel="Hamburger Menu">
+                                            <button key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mQa-vl-58N">
+                                                <rect key="frame" x="16" y="11" width="50" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                <state key="normal" title="Logout">
+                                                <color key="tintColor" red="0.084227093269999997" green="0.76770647530000002" blue="0.87345006700000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" image="list">
                                                     <color key="titleColor" red="0.084227093269999997" green="0.76770647530000002" blue="0.87345006700000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" red="0.084227093269999997" green="0.76770647530000002" blue="0.87345006700000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="onLogout:" destination="ODl-g2-WN3" eventType="touchUpInside" id="Vf9-vK-CW2"/>
-                                                    <segue destination="vXZ-lx-hvc" kind="modal" identifier="logoutSegue" id="nMU-VS-7Zi"/>
+                                                    <action selector="menuButtonClicked:" destination="ODl-g2-WN3" eventType="touchUpInside" id="ReP-d7-jdJ"/>
+                                                    <segue destination="bVv-WF-Cmq" kind="modal" id="4Hz-Gt-Ppo"/>
                                                 </connections>
                                             </button>
                                         </barButtonItem>
@@ -1090,6 +1112,7 @@
         <image name="compose" width="15" height="15"/>
         <image name="favorite" width="8" height="8"/>
         <image name="fb" width="14" height="14"/>
+        <image name="list" width="20" height="10"/>
         <image name="logo" width="64" height="53"/>
         <image name="reply" width="8" height="8"/>
         <image name="retweet" width="9" height="8"/>
@@ -1102,7 +1125,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gha-ck-a2I"/>
+        <segue reference="4Hz-Gt-Ppo"/>
+        <segue reference="zBO-Q9-vDQ"/>
         <segue reference="v1d-c9-C6c"/>
         <segue reference="Mfq-TM-yvV"/>
         <segue reference="nI3-EJ-UTJ"/>
